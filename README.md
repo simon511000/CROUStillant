@@ -21,11 +21,14 @@
 
 CROUStillant, is an unofficial Discord bot to keep track of the Menus of each restaurants in REIMS, CHARLEVILLE, CHÂLONS and TROYES.  
 Only `REIMS - Campus Sciences - Resto U Moulin de la Housse` is available at the moment, I'll add more when I can!  
-    
+The Menus will update automatically every day  
+
 **Important Note: CROUStillant __is not__ affiliated with 'Crous' or 'Crous Reims'!**   
    
    
 If you need help or find any bug please let us know on the **[Support Server](https://discord.gg/xm9QX3Q)**.   
+
+![ScreenShot](https://media.discordapp.net/attachments/803308630404235264/1025805965989257386/unknown.png?width=616&height=670)
 
 ## Links
 
