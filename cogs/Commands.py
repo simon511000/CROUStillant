@@ -48,6 +48,7 @@ class Commands(commands.Cog):
     @app_commands.command(name="crous", description="Configurez le CrousBot sur votre serveur.")
     @app_commands.describe(restaurant="Choisissez votre Restaurant Crous.")
     @app_commands.describe(salon="Choisissez dans quel salon le repas sera affiché.")
+    @app_commands.default_permissions(manage_guild=True)
     async def crous(
         self, 
         interaction: discord.Interaction,
