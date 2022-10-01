@@ -14,7 +14,6 @@
 </p>
 
   - [Introduction](https://github.com/Polsulpicien/CROUStillant/#introduction)  
-  - [Installing](https://github.com/Polsulpicien/CROUStillant/#installing)  
   - [Links](https://github.com/Polsulpicien/CROUStillant/#links)  
   - [License](https://github.com/Polsulpicien/CROUStillant/#license) 
 
@@ -27,19 +26,6 @@ Only `REIMS - Campus Sciences - Resto U Moulin de la Housse` is available at the
    
    
 If you need help or find any bug please let us know on the **[Support Server](https://discord.gg/xm9QX3Q)**.   
-
-## Installing  
-
-Download the latest version of CROUStillant.
-
-In the `.env` file, register your Discord bot Token and your Mapbox API key.  
-You will also need to set your PostgreSQL Database password.  
-
-
-Then launch the `.main.py` file and the bot should appear online!
-
-
-*This bot was only tested with python 3.10!*    
 
 ## Links
 
