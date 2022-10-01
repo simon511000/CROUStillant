@@ -50,7 +50,7 @@ class Bot(commands.Bot):
             ),
             slash_commands = True,
             activity = discord.Activity(name=f"Crous Restaurants", type=discord.ActivityType.watching),
-            status = discord.Status.idle
+            status = discord.Status.online
         )
 
 
@@ -109,9 +109,9 @@ class Bot(commands.Bot):
         print(f"CrousBot is now on!\n>> {datetime.utcnow()}\n")
         self.log.info(f"CrousBot is now on!\n>> {datetime.utcnow()}\n")
         self.ready = True
-        
+
         self.avatar_url = self.user.avatar.url
-        
+
         await self.run_task()
 
 

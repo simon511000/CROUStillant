@@ -41,7 +41,7 @@ async def load_embed(client, rid, infos, dates, paris_dt):
         clean_date = pytz.timezone("Europe/Paris").localize(datetime.datetime(int(year), int(month), int(day)), is_dst=None).strftime('%A %d %B')
 
 
-        embed = discord.Embed(title=f"{infos.nom}", description=f"**`•` Menu du `{date.replace('-', '/')}/{year}`**\n**`•` Updated**: <t:{int(paris_dt.timestamp())}:R> (<t:{int(paris_dt.timestamp())}>)\n\u2063", color=client.color, url=infos.url)
+        embed = discord.Embed(title=f"{infos.nom}", description=f"**`•` Menu du `{date.replace('-', '/')}/{year}`**\n**`•` Updated**: <t:{int(datetime.datetime.utcnow().timestamp())}:R> (<t:{int(datetime.datetime.utcnow().timestamp())}>)\n\u2063", color=client.color, url=infos.url)
         embed.add_field(name="__Traditionnel__\n\u2063", value=f"**Entrées**:\n- {menu.tradi.entrees_format}\n\n**Plats**:\n- {menu.tradi.plats_format}\n\n**Desserts**:\n- {menu.tradi.deserts_format}")
         embed.add_field(name="ㅤㅤ", value="ㅤㅤ")
         embed.add_field(name="__Brasserie__\n\u2063", value=f"**Entrées**:\n- {menu.brasserie.entrees_format}\n\n**Plats**:\n- {menu.brasserie.plats_format}\n\n**Desserts**:\n- {menu.brasserie.deserts_format}")
