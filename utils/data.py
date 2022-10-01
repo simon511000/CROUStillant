@@ -1,0 +1,57 @@
+restos = {
+    "CHALONS - ENSAM - Resto U ENSAM": "r108",
+    "CHARLEVILLE - Centre - Resto U Maison des étudiants": "r109",
+    "CHARLEVILLE - P.H.T. - Resto U Moulin Le Blanc": "r110",
+    "REIMS - Campus Lettres - Resto U Jean-Charles Prost": "r104",
+    "REIMS - Campus Lettres - Resto U Paul Fort": "r106",
+    "REIMS - Campus Lettres - Resto U Pôle santé": "r107",
+    "REIMS - Campus Lettres - Resto U SciencesPo": "r794",
+    "REIMS - Campus Sciences - Resto U Moulin de la Housse": "r103",
+    "REIMS - Campus Sciences - Resto U INSPE de REIMS": "r105",
+    "REIMS - Campus Sciences - Cafet IUT Reims": "r693",
+    "REIMS - Campus Sciences - Cafet Evariste Galois": "r694",
+    "REIMS - Campus Sciences - Cafet Sciences": "r801",
+    "TROYES - Campus - Resto U Les Lombards": "r111",
+    "TROYES - Campus - Cafet IUT Troyes": "r703",
+    "TROYES - Campus - Brasserie UTT": "r777",
+    "TROYES - Centre - Resto U Les Courtines": "r112"
+}
+
+
+coords = {
+    "r108": (),
+    "r109": (),
+    "r110": (),
+    "r104": (),
+    "r106": (),
+    "r107": (),
+    "r794": (),
+    "r103": (4.06041, 49.242),
+    "r105": (),
+    "r693": (),
+    "r694": (),
+    "r801": (),
+    "r111": (),
+    "r703": (),
+    "r777": (),
+    "r112": (),
+}
+
+restos_data = {
+    "r108": (),
+    "r109": (),
+    "r110": (),
+    "r104": (),
+    "r106": (),
+    "r107": (),
+    "r794": (),
+    "r103": {"url": "https://www.crous-reims.fr/restaurant/resto-u-moulin-de-la-housse/", "campus": "Campus Sciences ", "nom": "Resto U Moulin de la Housse", "adresse": "4 chemin des Rouliers", "cp": "51100", "ville": "Reims", "tel": "03.26.85.30.18", "mail": "mhc@crous-reims.fr", "horaires": {"midi": {"self": "11h30 - 13h45", "cafet": "11h30 - 15h"}}, "acces": {"bus": ["3", "11"], "pmr": True}, "wifi": True, "payement": {"cb": True, "izly": True}},
+    "r105": (),
+    "r693": (),
+    "r694": (),
+    "r801": (),
+    "r111": (),
+    "r703": (),
+    "r777": (),
+    "r112": (),
+}
