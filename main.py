@@ -64,7 +64,6 @@ class Bot(commands.Bot):
         self.path = str(Path(__file__).parents[0])
         
 
-        self.avatar_url = self.user.avatar.url
         self.footer_text = f"CrousBot • v1.0.1 - Made by Polsu Development" 
 
 
@@ -110,7 +109,9 @@ class Bot(commands.Bot):
         print(f"CrousBot is now on!\n>> {datetime.utcnow()}\n")
         self.log.info(f"CrousBot is now on!\n>> {datetime.utcnow()}\n")
         self.ready = True
-
+        
+        self.avatar_url = self.user.avatar.url
+        
         await self.run_task()
 
 
