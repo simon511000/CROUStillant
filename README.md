@@ -15,6 +15,7 @@
 
   - [Introduction](https://github.com/Polsulpicien/CROUStillant/#introduction)  
   - [Links](https://github.com/Polsulpicien/CROUStillant/#links)  
+  - [Usage](https://github.com/Polsulpicien/CROUStillant/#usage)  
   - [License](https://github.com/Polsulpicien/CROUStillant/#license) 
 
 ## Introduction  
@@ -32,6 +33,10 @@ If you need help or find any bug please let us know on the **[Support Server](ht
 
 
 Thanks to `LockBlock 📌#8107` for the API.  
+
+## Usage
+
+[Invite CROUStillant](https://discord.com/api/oauth2/authorize?client_id=1024564077068025867&permissions=277025704000&scope=bot%20applications.commands) then run `/crous` and you are done!
 
 ## Links
 
