@@ -30,6 +30,9 @@ If you need help or find any bug please let us know on the **[Support Server](ht
 
 ![ScreenShot](https://media.discordapp.net/attachments/803308630404235264/1025805965989257386/unknown.png?width=616&height=670)
 
+
+Thanks to `LockBlock 📌#8107` for the API.  
+
 ## Links
 
 - [Polsu Development](https://discord.gg/xm9QX3Q)
