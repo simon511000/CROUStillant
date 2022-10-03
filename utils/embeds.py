@@ -16,7 +16,7 @@ async def load_embed(client, rid, infos, dates, paris_dt):
 
     
     # Week-ends
-    if int(paris_dt.strftime("%w")) == 5 or int(paris_dt.strftime("%w")) == 6:
+    if int(paris_dt.strftime("%w")) == 5 or int(paris_dt.strftime("%w")) == 6 or int(paris_dt.strftime("%w")) == 0:
         dates.pop(0) # remove Friday
 
 

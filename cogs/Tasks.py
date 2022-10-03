@@ -30,17 +30,20 @@ class Tasks(commands.Cog):
 
 
     @daily_task.before_loop
-    async def wait_until_7am(self):
-        print("Waiting for the bot to be ready...")
-        await self.client.wait_until_ready()
+    async def wait_until_time(self):
+        now = datetime.now(pytz.timezone("Europe/Paris"))
 
-        paris_dt = pytz.timezone("Europe/Paris").localize(datetime.now(), is_dst=None)
-        next_run = paris_dt.replace(hour=24, minute=0, second=0)
+        task = self.daily_task
+        interval = timedelta(hours=task.hours, minutes=task.minutes, seconds=task.seconds)
 
-        if next_run < paris_dt:
-            next_run += timedelta(days=1)
+        next_run = now.replace(hour=24, minute=0, second=0)
+
+        while next_run > now:
+            next_run -= interval
+        next_run += interval
 
         await discord.utils.sleep_until(next_run)
+
 
 
 async def setup(client):

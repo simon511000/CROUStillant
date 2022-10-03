@@ -112,7 +112,7 @@ class Commands(commands.Cog):
                     await conn.execute("INSERT INTO settings (id, rid, channel, message, timestamp) VALUES ($1, $2, $3, $4, $5)", interaction.guild.id, restos[restaurant], salon.id, msg.id, datetime.utcnow().timestamp())
             else:
                 async with interaction.client.pool.acquire() as conn:
-                    await conn.execute("UPDATE settings SET rid = $1, channel = $2, message = $3, timestamp = $ 4 WHERE id = $5", restos[restaurant], salon.id, msg.id, interaction.guild.id, datetime.utcnow().timestamp())
+                    await conn.execute("UPDATE settings SET rid = $1, channel = $2, message = $3, timestamp = $4 WHERE id = $5", restos[restaurant], salon.id, msg.id, datetime.utcnow().timestamp(), interaction.guild.id)
 
             return await interaction.followup.send(content=f"Sucessfully sent the Menu to {salon.mention}, it will update at midnight every day.", ephemeral=True)
         except discord.errors.Forbidden:

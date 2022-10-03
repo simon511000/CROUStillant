@@ -219,7 +219,6 @@ class Bot(commands.Bot):
                 data = self.cache[rid][0]
                 view = self.cache[rid][1]
             
-            
 
             try:
                 channel = self.get_channel(guild.get('channel'))
