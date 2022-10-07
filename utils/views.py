@@ -46,7 +46,7 @@ class Menu(discord.ui.View):
 
     @discord.ui.button(emoji="<:icons_question:1005033387226058803>", style=discord.ButtonStyle.gray, row=1)
     async def question(self, interaction: discord.Interaction, button: discord.ui.Button):
-        embed=discord.Embed(title=f"{self.infos.nom}", description=f"**`•` Le Menu peut changé à n'importe quel moment en fonction des stocks et due à des évènements imprévus!**\n\n\nThis Bot was created by `Polsulpicien#5020` from [Polsu's Development Team](https://discord.gg/xm9QX3Q).\n\n**This bot is not affiliated with 'Crous' or 'Crous Reims'!**", color=interaction.client.color, url=self.infos.url)
+        embed=discord.Embed(title=f"{self.infos.nom}", description=f"**`•` Le Menu peut changé à n'importe quel moment en fonction des stocks et due à des évènements imprévus!**\n\n\nCROUStillant - Programmer par `Polsulpicien#5020` de [Polsu's Development Team](https://discord.gg/xm9QX3Q).\n\n**Ce bot n'est pas affilié avec 'Crous' ou 'Crous Reims'!**", color=interaction.client.color, url=self.infos.url)
         embed.set_footer(text=interaction.client.footer_text, icon_url=interaction.client.avatar_url)
         return await interaction.response.send_message(embed=embed, ephemeral=True)
 

@@ -6,10 +6,8 @@ class Menu:
         self.data = data
 
         if data.startswith("Le CROUS ne fournit pas d'information actuellement pour ce restaurant..."):
-            self.error = True
+            raise AttributeError
         else:
-            self.error = False
-
             self.tradi = Traditionnel(data)
             self.brasserie = Brasserie(data)
 

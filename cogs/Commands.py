@@ -92,7 +92,7 @@ class Commands(commands.Cog):
 
                 if count >= 7:
                     run = False 
-                    return await interaction.followup.send(content="Something went wrong...", ephemeral=True) 
+                    return await interaction.followup.send(content="Une erreur inatendue est survenu...", ephemeral=True) 
             except:
                 pass
         
@@ -114,11 +114,11 @@ class Commands(commands.Cog):
                 async with interaction.client.pool.acquire() as conn:
                     await conn.execute("UPDATE settings SET rid = $1, channel = $2, message = $3, timestamp = $4 WHERE id = $5", restos[restaurant], salon.id, msg.id, datetime.utcnow().timestamp(), interaction.guild.id)
 
-            return await interaction.followup.send(content=f"Sucessfully sent the Menu to {salon.mention}, it will update at midnight every day.", ephemeral=True)
+            return await interaction.followup.send(content=f"Le Menu est configurer dans {salon.mention}, il se mettra à jour chaue jour a minuit.", ephemeral=True)
         except discord.errors.Forbidden:
-            return await interaction.followup.send(content=f"I do not have Permission to send messages in {salon.mention}", ephemeral=True)
+            return await interaction.followup.send(content=f"Je n'ai pas la permission d'envoyer des messages dans {salon.mention}", ephemeral=True)
         except:
-            return await interaction.followup.send(content="Something went wrong...", ephemeral=True) 
+            return await interaction.followup.send(content="Une erreur inatendue est survenu...", ephemeral=True) 
 
 
       

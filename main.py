@@ -64,7 +64,7 @@ class Bot(commands.Bot):
         self.path = str(Path(__file__).parents[0])
         
 
-        self.footer_text = f"CrousBot • v1.0.1 - Made by Polsu Development" 
+        self.footer_text = f"CrousBot • v1.0.1 - Crée par Polsu Development" 
 
 
         # Variables
