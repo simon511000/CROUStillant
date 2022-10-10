@@ -1,3 +1,6 @@
+from utils.task import run_task
+
+
 import discord
 from discord.ext import commands, tasks
 
@@ -30,7 +33,7 @@ class Tasks(commands.Cog):
 
     @tasks.loop(time=time_to_execute)
     async def daily_task(self):
-        await self.client.run_task()
+        await run_task(self.client)
 
 
 async def setup(client):

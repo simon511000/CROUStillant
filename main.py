@@ -1,8 +1,4 @@
-
-from Crous.requests import get_crous_menu, get_crous_info
-
-from utils.embeds import load_embed
-from utils.views import Menu
+from utils.task import run_task
 
 
 import discord
@@ -11,9 +7,7 @@ from discord.ext import commands
 
 import logging
 import asyncpg
-import json
 import asyncio
-import pytz
 
 
 from asyncpg.exceptions import UndefinedTableError
@@ -75,7 +69,7 @@ class Bot(commands.Bot):
         self.launch = str(time()).split(".")[0]
         self.launch_time = datetime.utcnow()
 
-
+    
         # Logging
         logging.getLogger("discord").setLevel(logging.INFO)
         logging.getLogger("discord.http").setLevel(logging.WARNING)
@@ -112,7 +106,7 @@ class Bot(commands.Bot):
 
         self.avatar_url = self.user.avatar.url
 
-        await self.run_task()
+        await run_task(self)
 
 
     async def close(self):
@@ -163,95 +157,6 @@ class Bot(commands.Bot):
                     self.log.info(f"Loaded {file[:-3]} cog")
                 except Exception as e:
                     self.log.error(f"Error loading {file[:-3]} cog: {e}")
-
-
-
-    async def run_task(self):
-        async with self.pool.acquire() as conn:
-            rows = await conn.fetch("SELECT * FROM settings")
-        guilds = [dict(row) for row in rows]
-
-        for guild in guilds:
-            rid = guild.get('rid')
-
-            if rid not in self.cache:
-                paris_dt = pytz.timezone("Europe/Paris").localize(datetime.now(), is_dst=None)
-
-                # Week-ends
-                if int(paris_dt.strftime("%w")) == 5:
-                    new_date =paris_dt + timedelta(hours=72)
-                elif int(paris_dt.strftime("%w")) == 6:
-                    new_date = paris_dt + timedelta(hours=48)
-                else:
-                    new_date = paris_dt + timedelta(hours=24)
-
-
-                # If there is no menu for a date it tries the next 7 days or fails.
-                # Could be improve, and will be improved, but lazy for now :D
-
-                run = True
-                count = 0
-                while run:
-                    try:
-                        menus = await get_crous_menu(
-                            self.session, 
-                            rid, 
-                            new_date.strftime("%Y-%m-%d")
-                        )
-
-                        infos = get_crous_info(
-                            rid
-                        )
-                        run= False
-                        count += 1
-
-                        if count >= 7:
-                            run = False 
-                            break
-                    except:
-                        pass
-                
-                data = await load_embed(self, rid, infos, menus.dates, paris_dt)
-                view = Menu(infos, data[0], data[1], data[2])
-
-                self.cache[rid] = (data, view)
-            else:
-                data = self.cache[rid][0]
-                view = self.cache[rid][1]
-            
-
-            try:
-                channel = self.get_channel(guild.get('channel'))
-
-                if guild.get('message') == None:
-                    message = await channel.send(embed=data[0][0], view=view)
-
-                    async with self.pool.acquire() as conn:
-                        await conn.execute("UPDATE settings SET message = $1 WHERE id = $2", message.id, guild.get('id'))
-                else:
-                    try:
-                        message = await channel.fetch_message(guild.get('message'))
-                        await message.edit(embed=data[0][0], view=view)
-                    except:
-                        # If the message was deleted, the bot tries to send the message again...
-                        try:
-                            message = await channel.send(embed=data[0][0], view=view)
-
-                            async with self.pool.acquire() as conn:
-                                await conn.execute("UPDATE settings SET message = $1 WHERE id = $2", message.id, guild.get('id'))
-                        except discord.errors.HTTPException:
-                            # Discord Server Errors 
-                            pass
-                        except AttributeError:
-                            async with self.pool.acquire() as conn:
-                                await conn.execute("DELETE FROM settings WHERE id = $1", guild.get('id'))            
-            except discord.errors.HTTPException:
-                # Discord Server Errors 
-                pass
-            except AttributeError:
-                async with self.pool.acquire() as conn:
-                    await conn.execute("DELETE FROM settings WHERE id = $1", guild.get('id'))
-
 
 
 async def main():
