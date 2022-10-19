@@ -11,14 +11,12 @@ import pytz
 from datetime import time
 
 
-time_to_execute = time(hour=23, minute=59, tzinfo=pytz.timezone("Europe/Paris"))
+time_to_execute = time(hour=2, minute=0, tzinfo=pytz.timezone("Europe/Paris"))
 
 
 class Tasks(commands.Cog):
     def __init__(self, client):
         self.client = client
-
-        self.client.log.info(time_to_execute)
 
         self.daily_task.start()
 

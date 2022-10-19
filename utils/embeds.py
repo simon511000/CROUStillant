@@ -20,12 +20,21 @@ async def load_embed(client, rid, infos, dates, paris_dt):
         dates.pop(0) # remove Friday
 
 
+    # Sometimes, yesterday's Menu is still available, so we remove it
+    if (paris_dt - datetime.timedelta(days=1)).strftime("%d-%m") == dates[0]:
+        dates.pop(0)
+
+
     index = 0
     for date in dates:
         year = paris_dt.strftime('%Y')
 
         month = str(date.split('-')[1])
         day = str(date.split('-')[0])
+
+
+        clean_date = pytz.timezone("Europe/Paris").localize(datetime.datetime(int(year), int(month), int(day)), is_dst=None).strftime('%A %d %B')
+
 
         try:
             menu = await get_crous_menu(
@@ -38,10 +47,6 @@ async def load_embed(client, rid, infos, dates, paris_dt):
                 month = month[1:]
             if day.startswith('0'):
                 day = day[1:]
-
-
-            clean_date = pytz.timezone("Europe/Paris").localize(datetime.datetime(int(year), int(month), int(day)), is_dst=None).strftime('%A %d %B')
-
 
             embed = discord.Embed(title=f"{infos.nom}", description=f"**`•` Menu du `{date.replace('-', '/')}/{year}`**\n**`•` Updated**: <t:{int(datetime.datetime.utcnow().timestamp())}:R> (<t:{int(datetime.datetime.utcnow().timestamp())}>)\n\u2063", color=client.color, url=infos.url)
             embed.add_field(name="__Traditionnel__\n\u2063", value=f"**Entrées**:\n- {menu.tradi.entrees_format}\n\n**Plats**:\n- {menu.tradi.plats_format}\n\n**Desserts**:\n- {menu.tradi.deserts_format}")

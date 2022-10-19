@@ -97,3 +97,5 @@ async def run_task(client):
         except AttributeError:
             async with client.pool.acquire() as conn:
                 await conn.execute("DELETE FROM settings WHERE id = $1", guild.get('id'))
+
+    client.cache = {}
