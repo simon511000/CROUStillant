@@ -11,7 +11,7 @@ import pytz
 from datetime import time
 
 
-time_to_execute = time(hour=2, minute=0, tzinfo=pytz.timezone("Europe/Paris"))
+time_to_execute = time(hour=1, minute=0, tzinfo=pytz.timezone("Europe/Paris"))
 
 
 class Tasks(commands.Cog):
