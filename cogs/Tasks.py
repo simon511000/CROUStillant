@@ -1,7 +1,6 @@
 from utils.task import run_task
 
 
-import discord
 from discord.ext import commands, tasks
 
 

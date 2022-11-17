@@ -54,6 +54,7 @@ class Commands(commands.Cog):
         interaction: discord.Interaction,
         restaurant: typing.Literal[
             "REIMS - Campus Sciences - Resto U Moulin de la Housse",
+            "TROYES - Campus - Resto U Les Lombards",
         ], 
         salon : discord.TextChannel,
     ):

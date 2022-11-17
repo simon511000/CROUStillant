@@ -76,7 +76,7 @@ class Info:
         self.coords = coords
 
         self.horaires = Horaires(data.get('horaires', ''))
-        self.payement = Payment(data.get('payement', ''))
+        self.paiement = Paiement(data.get('paiement', ''))
         self.acces = Acces(data.get('acces', ''))
 
 
@@ -88,7 +88,7 @@ class Horaires:
         self.midi_cafet = data.get('midi', {}).get('cafet', '')
 
 
-class Payment:
+class Paiement:
     def __init__(self, data: dict):
         self.data = data
 

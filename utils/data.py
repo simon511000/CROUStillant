@@ -18,6 +18,15 @@ restos = {
 }
 
 
+icons = {
+    "pmr": "<:pmr:1042786157819346994>",
+    "cb": "<:cb:1042786154409361418>",
+    "izly": "<:izly:1042786156049346580>",
+    "wifi": "<:wifi:1042786159123763311>",
+    "bus": "<:bus:1042787451623706695>",
+}   
+
+
 coords = {
     "r108": (),
     "r109": (),
@@ -31,7 +40,7 @@ coords = {
     "r693": (),
     "r694": (),
     "r801": (),
-    "r111": (),
+    "r111": (4.069626, 48.268765),
     "r703": (),
     "r777": (),
     "r112": (),
@@ -45,12 +54,12 @@ restos_data = {
     "r106": (),
     "r107": (),
     "r794": (),
-    "r103": {"url": "https://www.crous-reims.fr/restaurant/resto-u-moulin-de-la-housse/", "campus": "Campus Sciences ", "nom": "Resto U Moulin de la Housse", "adresse": "4 chemin des Rouliers", "cp": "51100", "ville": "Reims", "tel": "03.26.85.30.18", "mail": "mhc@crous-reims.fr", "horaires": {"midi": {"self": "11h30 - 13h45", "cafet": "11h30 - 15h"}}, "acces": {"bus": ["3", "11"], "pmr": True}, "wifi": True, "payement": {"cb": True, "izly": True}},
+    "r103": {"url": "https://www.crous-reims.fr/restaurant/resto-u-moulin-de-la-housse/", "campus": "Campus Sciences ", "nom": "Resto U Moulin de la Housse", "adresse": "4 chemin des Rouliers", "cp": "51100", "ville": "Reims", "tel": "03.26.85.30.18", "mail": "mhc@crous-reims.fr", "horaires": {"midi": {"self": "11h30 - 13h45", "cafet": "11h30 - 15h"}}, "acces": {"bus": ["3", "11"], "pmr": True}, "wifi": True, "paiement": {"cb": True, "izly": True}},
     "r105": (),
     "r693": (),
     "r694": (),
     "r801": (),
-    "r111": (),
+    "r111": {"url": "https://www.crous-reims.fr/restaurant/resto-u-les-lombards/", "campus": "Campus", "nom": "Resto U Les Lombards", "adresse": "28 Place Léonard de VINCI", "cp": "10430", "ville": "Rosières-Près-Troyes", "tel": "03.25.78.17.44", "mail": "Indisponible", "horaires": {"midi": {"self": "11h30 - 13h45"}}, "acces": {"bus": ["6", "10", "11"], "pmr": False}, "wifi": True, "paiement": {"cb": True, "izly": True}},
     "r703": (),
     "r777": (),
     "r112": (),
