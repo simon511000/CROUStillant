@@ -63,7 +63,7 @@ def get_dates(
         txt = ' '.join(BeautifulSoup(i, "html.parser").findAll(text=True)).replace(" \n", "").replace("\n", "")
         if ' ' in txt:
             txt = txt.split(' ')[1]
-        if not "-" in txt:
+        if "-" in txt:
             list_data.append(txt)
     return list_data[:7]
 
