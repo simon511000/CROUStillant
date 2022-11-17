@@ -16,7 +16,7 @@ def get_clean_date(day, month, year):
 
     date = pytz.timezone("Europe/Paris").localize(datetime.datetime(int(year), int(month), int(day)), is_dst=None)
 
-    return f"{jours[int(date.strftime('%w'))]} {day} {mois[int(date.strftime('%m'))]}"
+    return f"{jours[int(date.strftime('%w'))-1]} {day} {mois[int(date.strftime('%m'))-1]}"
 
 
 async def load_embed(client, rid, infos, dates, paris_dt):
@@ -36,9 +36,6 @@ async def load_embed(client, rid, infos, dates, paris_dt):
 
     index = 0
     for date in dates:
-        if not "-" in date:
-            continue
-
         try:
             year = paris_dt.strftime('%Y')
 
@@ -60,9 +57,9 @@ async def load_embed(client, rid, infos, dates, paris_dt):
                 day = day[1:]
 
             embed = discord.Embed(title=f"{infos.nom}", description=f"**`•` Menu du `{date.replace('-', '/')}/{year}`**\n**`•` Mis à jour**: <t:{int(datetime.datetime.utcnow().timestamp())}:R> (<t:{int(datetime.datetime.utcnow().timestamp())}>)\n\u2063", color=client.color, url=infos.url)
-            embed.add_field(name="__Traditionnel__\n\u2063", value=f"**Entrées**:\n- {menu.tradi.entrees_format}\n\n**Plats**:\n- {menu.tradi.plats_format}\n\n**Desserts**:\n- {menu.tradi.deserts_format}")
+            embed.add_field(name=f"__{menu.part1.title}__\n\u2063", value=f"**Entrées**:\n- {menu.part1.val1}\n\n**Plats**:\n- {menu.part1.val2}\n\n**Desserts**:\n- {menu.part1.val3}")
             embed.add_field(name="ㅤㅤ", value="ㅤㅤ")
-            embed.add_field(name="__Brasserie__\n\u2063", value=f"**Entrées**:\n- {menu.brasserie.entrees_format}\n\n**Plats**:\n- {menu.brasserie.plats_format}\n\n**Desserts**:\n- {menu.brasserie.deserts_format}")
+            embed.add_field(name=f"__{menu.part2.title}__\n\u2063", value=f"**Entrées**:\n- {menu.part2.val1}\n\n**Plats**:\n- {menu.part2.val2}\n\n**Desserts**:\n- {menu.part2.val3}")
             embed.set_thumbnail(url=client.avatar_url)
             embed.set_footer(text=client.footer_text, icon_url=client.avatar_url)
         except:

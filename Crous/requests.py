@@ -18,7 +18,7 @@ async def get_crous_menu(
         
     async with session.post(f"https://ent-1.univ-reims.fr/esup-crous/action/getMenu.php", data=data) as response:
         text = await response.text()
-        return Menu(text)
+        return Menu(text, restos_data.get(ru, {}).get('format'))
 
 
 def get_crous_info(

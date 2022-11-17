@@ -2,37 +2,47 @@ from bs4 import BeautifulSoup
 
 
 class Menu:
-    def __init__(self, data: str):
+    def __init__(self, data: str, format):
         self.data = data
 
         if data.startswith("Le CROUS ne fournit pas d'information actuellement pour ce restaurant..."):
             raise AttributeError
         else:
-            self.tradi = Traditionnel(data)
-            self.brasserie = Brasserie(data)
+            self.part1 = Part1(data)
+            self.part2 = Part2(data)
 
             self.dates = get_dates(data)
     
 
-class Traditionnel:
-    def __init__(self, data: str):
-        self.entrees = get_list(data, 1)
-        self.plats = get_list(data, 2)
-        self.deserts = get_list(data, 3)
+class Part1:
+    def __init__(self, data: str, format: dict):
+        self.title = format.get(-1)
 
-        self.entrees_format = '\n- '.join(self.entrees)
-        self.plats_format = '\n- '.join(self.plats)
-        self.deserts_format = '\n- '.join(self.deserts)
 
-class Brasserie:
-    def __init__(self, data: str):
-        self.entrees = get_list(data, 4)
-        self.plats = get_list(data, 5)
-        self.deserts = get_list(data, 6)
+        self.f1 = format.get(0)
+        self.val1 = '\n- '.join(get_list(data, 1))
 
-        self.entrees_format = '\n- '.join(self.entrees)
-        self.plats_format = '\n- '.join(self.plats)
-        self.deserts_format = '\n- '.join(self.deserts)
+        self.f2 = format.get(1)
+        self.val2 = '\n- '.join(get_list(data, 2))
+
+        self.f3 = format.get(2)
+        self.val3 = '\n- '.join(get_list(data, 3))
+
+
+class Part2:
+    def __init__(self, data: str, format: dict):
+        self.title = format.get(-3)
+
+
+        self.f1 = format.get(0)
+        self.val1 = '\n- '.join(get_list(data, 4))
+
+        self.f2 = format.get(1)
+        self.val2 = '\n- '.join(get_list(data, 5))
+
+        self.f3 = format.get(2)
+        self.val3 = '\n- '.join(get_list(data, 6))
+
 
 
 def get_list(
@@ -53,7 +63,8 @@ def get_dates(
         txt = ' '.join(BeautifulSoup(i, "html.parser").findAll(text=True)).replace(" \n", "").replace("\n", "")
         if ' ' in txt:
             txt = txt.split(' ')[1]
-        list_data.append(txt)
+        if not "-" in txt:
+            list_data.append(txt)
     return list_data[:7]
 
 

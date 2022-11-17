@@ -94,7 +94,8 @@ class Commands(commands.Cog):
                 if count >= 7:
                     run = False 
                     return await interaction.followup.send(content="Une erreur inatendue est survenu...", ephemeral=True) 
-            except:
+            except Exception as e:
+                self.client.log(e)
                 pass
         
         
