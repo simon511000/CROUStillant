@@ -11,9 +11,6 @@ async def get_crous_menu(
     ru: str, 
     dt: str,
 ):
-    if session == None:
-        session = ClientSession()
-
     data = {
         "ru": ru,
         "dt": dt    

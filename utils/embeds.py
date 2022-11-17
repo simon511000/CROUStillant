@@ -7,16 +7,16 @@ import discord
 
 
 import datetime
+import pytz
 
 
-def get_clean_date(day, raw_day, month, paris_dt):
+def get_clean_date(day, month, year):
     jours = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
     mois = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembtre", "Octobre", "Novembre", "Décembre"]
 
-    if int(paris_dt.strftime("%d")) + 1 == day:
-        return f"Demain - {jours[day]} {raw_day} {mois[month]}"
-    else:
-        return f"{jours[day]} {raw_day} {mois[month]}"
+    date = pytz.timezone("Europe/Paris").localize(datetime.datetime(int(year), int(month), int(day)), is_dst=None)
+
+    return f"{jours[int(date.strftime('%w'))]} {day} {mois[int(date.strftime('%m'))]}"
 
 
 async def load_embed(client, rid, infos, dates, paris_dt):
@@ -45,8 +45,8 @@ async def load_embed(client, rid, infos, dates, paris_dt):
             month = str(date.split('-')[1])
             day = str(date.split('-')[0])
 
+            clean_date = get_clean_date(int(day), int(month), int(year))
 
-            clean_date = get_clean_date(int(paris_dt.strftime('%w'))-1, int(paris_dt.strftime('%m'))-1, day, paris_dt)
 
             menu = await get_crous_menu(
                 client.session, 
@@ -66,9 +66,8 @@ async def load_embed(client, rid, infos, dates, paris_dt):
             embed.set_thumbnail(url=client.avatar_url)
             embed.set_footer(text=client.footer_text, icon_url=client.avatar_url)
         except:
-            embed = discord.Embed(title=f"Error 404", description=f"**`•` Le CROUS ne fournit pas d'information actuellement pour ce restaurant...**", color=client.color, url=infos.url)
-        
-    
+            embed = discord.Embed(title=f"Error 404", description=f"**`•` `{date.replace('-', '/')}/{year}` Le CROUS ne fournit pas d'information actuellement pour ce restaurant...**", color=client.color, url=infos.url)
+
         if index == 0:
             options.append(discord.SelectOption(label=clean_date, description=f"{infos.nom} - {date.replace('-', '/')}", value=index, default=True))
         else:

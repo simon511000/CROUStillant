@@ -46,7 +46,7 @@ class Menu(discord.ui.View):
         else:
             cb = ""
         
-        if self.infos.midi_cafet != "":
+        if self.infos.horaires.midi_cafet != "":
             cafet = f"\n╰ **Cafétéria**: `{self.infos.horaires.midi_cafet}`"
         else:
             cafet = ""
