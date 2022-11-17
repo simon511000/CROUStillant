@@ -95,7 +95,7 @@ class Commands(commands.Cog):
                     run = False 
                     return await interaction.followup.send(content="Une erreur inatendue est survenu...", ephemeral=True) 
             except Exception as e:
-                self.client.log(e)
+                self.client.log.info(e)
                 pass
         
         

@@ -2,14 +2,14 @@ from bs4 import BeautifulSoup
 
 
 class Menu:
-    def __init__(self, data: str, format):
+    def __init__(self, data: str, format: dict):
         self.data = data
 
         if data.startswith("Le CROUS ne fournit pas d'information actuellement pour ce restaurant..."):
             raise AttributeError
         else:
-            self.part1 = Part1(data)
-            self.part2 = Part2(data)
+            self.part1 = Part1(data, format)
+            self.part2 = Part2(data, format)
 
             self.dates = get_dates(data)
     
