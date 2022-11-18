@@ -20,7 +20,7 @@ from aiohttp import ClientSession
 from datetime import datetime
 
 
-load_dotenv(dotenv_path=f"{str(Path(__file__).parents[0])}/.env")
+load_dotenv(dotenv_path=f"/root/.env")
 
 
 class Bot(commands.Bot):
@@ -167,7 +167,7 @@ async def main():
             client.session = session
             client.ssl = False
             await client.run()
-            await client.start(environ["token"], reconnect=True)
+            await client.start(environ["ctoken"], reconnect=True)
 
 
 asyncio.run(main())
