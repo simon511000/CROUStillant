@@ -60,9 +60,9 @@ async def load_embed(client, rid, infos, dates, paris_dt):
             embed.add_field(name=f"{menu.part1.title}\n\u2063", value=f"**{menu.part1.f1}**:\n- {menu.part1.val1}\n\n**{menu.part1.f2}**:\n- {menu.part1.val2}\n\n**{menu.part1.f3}**:\n- {menu.part1.val3}")
             embed.add_field(name="ㅤㅤ", value="ㅤㅤ")
             if menu.part2.val3 == "":
-                embed.add_field(name=f"{menu.part2.title}\n\u2063", value=f"**{menu.part1.f1}**:\n- {menu.part2.val1}\n\n**{menu.part1.f2}**:\n- {menu.part2.val2}\n\n**{menu.part1.f3}**:\n- {menu.part2.val3}")
-            else:
                 embed.add_field(name=f"{menu.part2.title}\n\u2063", value=f"**{menu.part1.f1}**:\n- {menu.part2.val1}\n\n**{menu.part1.f2}**:\n- {menu.part2.val2}")
+            else:
+                embed.add_field(name=f"{menu.part2.title}\n\u2063", value=f"**{menu.part1.f1}**:\n- {menu.part2.val1}\n\n**{menu.part1.f2}**:\n- {menu.part2.val2}\n\n**{menu.part1.f3}**:\n- {menu.part2.val3}")
             embed.set_thumbnail(url=client.avatar_url)
             embed.set_footer(text=client.footer_text, icon_url=client.avatar_url)
         except Exception as e:
