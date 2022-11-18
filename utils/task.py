@@ -1,4 +1,4 @@
-from Crous.requests import get_crous_menu, get_crous_info
+from Crous.requests import get_crous_info, load_dates
 
 from utils.embeds import load_embed
 from utils.views import Menu
@@ -32,32 +32,17 @@ async def run_task(client):
                 new_date = paris_dt + timedelta(hours=24)
 
 
-            # If there is no menu for a date it tries the next 7 days or fails.
-            # Could be improve, and will be improved, but lazy for now :D
-
-            run = True
-            count = 0
-            while run:
-                try:
-                    menus = await get_crous_menu(
-                        client.session, 
-                        rid, 
-                        new_date.strftime("%Y-%m-%d")
-                    )
-
-                    infos = get_crous_info(
-                        rid
-                    )
-                    run= False
-                    count += 1
-
-                    if count >= 7:
-                        run = False 
-                        break
-                except:
-                    pass
+            dates = load_dates(
+                client.session,
+                rid, 
+                new_date.strftime("%Y-%m-%d")
+            )
             
-            data = await load_embed(client, rid, infos, menus.dates, paris_dt)
+            infos = get_crous_info(
+                rid
+            )
+            
+            data = await load_embed(client, rid, infos, dates, paris_dt)
             view = Menu(infos, data[0], data[1], data[2])
 
             client.cache[rid] = (data, view)

@@ -51,7 +51,9 @@ def get_list(
 ):
     list_data = []
     for i in data.split("<h4>")[index].split('<li>'):
-        list_data.append(' '.join(BeautifulSoup(i, "html.parser").findAll(text=True)).replace(" \n", "").replace("\n", ""))
+        txt = ' '.join(BeautifulSoup(i, "html.parser").findAll(text=True)).replace(" \n", "").replace("\n", "")
+        if txt != "":
+            list_data.append(txt)
     return list_data[1:]
 
 

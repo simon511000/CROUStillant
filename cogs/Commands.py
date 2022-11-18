@@ -1,4 +1,4 @@
-from Crous.requests import get_crous_menu, get_crous_info
+from Crous.requests import get_crous_info, load_dates
 
 from utils.data import restos
 from utils.embeds import load_embed
@@ -72,34 +72,17 @@ class Commands(commands.Cog):
             new_date = paris_dt + timedelta(hours=24)
 
 
-        # If there is no menu for a date it tries the next 7 days or fails.
-        # Could be improve, and will be improved, but lazy for now :D
+        dates = load_dates(
+            self.client.session,
+            restos[restaurant], 
+            new_date.strftime("%Y-%m-%d")
+        )
 
-        run = True
-        count = 0
-        while run:
-            try:
-                menus = await get_crous_menu(
-                    self.client.session, 
-                    restos[restaurant], 
-                    new_date.strftime("%Y-%m-%d")
-                )
-
-                infos = get_crous_info(
-                    restos[restaurant]
-                )
-                run= False
-                count += 1
-
-                if count >= 7:
-                    run = False 
-                    return await interaction.followup.send(content="Une erreur inatendue est survenu...", ephemeral=True) 
-            except Exception as e:
-                self.client.log.info(e)
-                pass
+        infos = get_crous_info(
+            restos[restaurant]
+        )
         
-        
-        data = await load_embed(self.client, restos[restaurant], infos, menus.dates, paris_dt)
+        data = await load_embed(self.client, restos[restaurant], infos, dates, paris_dt)
         view = Menu(infos, data[0], data[1], data[2])
         
         try:
