@@ -22,9 +22,10 @@ async def load_dates(
         list_data = []
         for i in text.split("<h4>")[0].split('</a>'):
             txt = ' '.join(BeautifulSoup(i, "html.parser").findAll(text=True)).replace(" \n", "").replace("\n", "")
-            if ' ' in txt and '-' in txt:
+            if ' ' in txt:
                 txt = txt.split(' ')[1]
-            list_data.append(txt)
+            if '-' in txt:
+                list_data.append(txt)
         return list_data[:7]
 
 

@@ -10,8 +10,6 @@ class Menu:
         else:
             self.part1 = Part1(data, format)
             self.part2 = Part2(data, format)
-
-            self.dates = get_dates(data)
     
 
 class Part1:
@@ -55,20 +53,6 @@ def get_list(
         if txt != "":
             list_data.append(txt)
     return list_data[1:]
-
-
-def get_dates(
-    data: str
-):
-    list_data = []
-    for i in data.split("<h4>")[0].split('</a>'):
-        txt = ' '.join(BeautifulSoup(i, "html.parser").findAll(text=True)).replace(" \n", "").replace("\n", "")
-        if ' ' in txt:
-            txt = txt.split(' ')[1]
-        if "-" in txt:
-            list_data.append(txt)
-    return list_data[:7]
-
 
 
 class Info:
