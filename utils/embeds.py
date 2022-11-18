@@ -25,7 +25,7 @@ async def load_embed(client, rid, infos, dates, paris_dt):
 
     
     # Week-ends
-    if int(paris_dt.strftime("%w")) == 5 or int(paris_dt.strftime("%w")) == 6 or int(paris_dt.strftime("%w")) == 0:
+    if int(paris_dt.strftime("%w")) == 6 or int(paris_dt.strftime("%w")) == 0:
         dates.pop(0) # remove Friday
 
 
@@ -62,7 +62,8 @@ async def load_embed(client, rid, infos, dates, paris_dt):
             embed.add_field(name=f"__{menu.part2.title}__\n\u2063", value=f"**Entrées**:\n- {menu.part2.val1}\n\n**Plats**:\n- {menu.part2.val2}\n\n**Desserts**:\n- {menu.part2.val3}")
             embed.set_thumbnail(url=client.avatar_url)
             embed.set_footer(text=client.footer_text, icon_url=client.avatar_url)
-        except:
+        except Exception as e:
+            client.log.info(e)
             embed = discord.Embed(title=f"Error 404", description=f"**`•` `{date.replace('-', '/')}/{year}` Le CROUS ne fournit pas d'information actuellement pour ce restaurant...**", color=client.color, url=infos.url)
 
         if index == 0:

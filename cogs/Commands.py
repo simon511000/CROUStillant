@@ -69,7 +69,7 @@ class Commands(commands.Cog):
         elif int(paris_dt.strftime("%w")) == 6:
             new_date = paris_dt + timedelta(hours=48)
         else:
-            new_date = paris_dt + timedelta(hours=24)
+            new_date = paris_dt
 
 
         dates = await load_dates(
