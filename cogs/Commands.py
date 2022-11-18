@@ -72,7 +72,7 @@ class Commands(commands.Cog):
             new_date = paris_dt + timedelta(hours=24)
 
 
-        dates = load_dates(
+        dates = await load_dates(
             self.client.session,
             restos[restaurant], 
             new_date.strftime("%Y-%m-%d")

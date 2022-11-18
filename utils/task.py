@@ -32,7 +32,7 @@ async def run_task(client):
                 new_date = paris_dt + timedelta(hours=24)
 
 
-            dates = load_dates(
+            dates = await load_dates(
                 client.session,
                 rid, 
                 new_date.strftime("%Y-%m-%d")
