@@ -57,9 +57,9 @@ async def load_embed(client, rid, infos, dates, paris_dt):
                 day = day[1:]
 
             embed = discord.Embed(title=f"{infos.nom}", description=f"**`•` Menu du `{date.replace('-', '/')}/{year}`**\n**`•` Mis à jour**: <t:{int(datetime.datetime.utcnow().timestamp())}:R> (<t:{int(datetime.datetime.utcnow().timestamp())}>)\n\u2063", color=client.color, url=infos.url)
-            embed.add_field(name=f"__{menu.part1.title}__\n\u2063", value=f"**Entrées**:\n- {menu.part1.val1}\n\n**Plats**:\n- {menu.part1.val2}\n\n**Desserts**:\n- {menu.part1.val3}")
+            embed.add_field(name=f"{menu.part1.title}\n\u2063", value=f"**{menu.part1.f1}**:\n- {menu.part1.val1}\n\n**{menu.part1.f2}**:\n- {menu.part1.val2}\n\n**{menu.part1.f3}**:\n- {menu.part1.val3}")
             embed.add_field(name="ㅤㅤ", value="ㅤㅤ")
-            embed.add_field(name=f"__{menu.part2.title}__\n\u2063", value=f"**Entrées**:\n- {menu.part2.val1}\n\n**Plats**:\n- {menu.part2.val2}\n\n**Desserts**:\n- {menu.part2.val3}")
+            embed.add_field(name=f"{menu.part2.title}\n\u2063", value=f"**{menu.part1.f1}**:\n- {menu.part2.val1}\n\n**{menu.part1.f2}**:\n- {menu.part2.val2}\n\n**{menu.part1.f3}**:\n- {menu.part2.val3}")
             embed.set_thumbnail(url=client.avatar_url)
             embed.set_footer(text=client.footer_text, icon_url=client.avatar_url)
         except Exception as e:

@@ -17,14 +17,20 @@ class Part1:
         self.title = format.get(-1)
 
 
-        self.f1 = format.get(0)
-        self.val1 = '\n- '.join(get_list(data, 1))
+        self.f1 = format.get(0)[0]
+        self.val1 = ''
+        for i in format.get(0)[1]:
+            self.val1 += '\n- '.join(get_list(data, i))
 
-        self.f2 = format.get(1)
-        self.val2 = '\n- '.join(get_list(data, 2))
+        self.f2 = format.get(1)[0]
+        self.val2 = ''
+        for i in format.get(0)[1]:
+            self.val2 = '\n- '.join(get_list(data, i))
 
-        self.f3 = format.get(2)
-        self.val3 = '\n- '.join(get_list(data, 3))
+        self.f3 = format.get(2)[0]
+        self.val3 = ''
+        for i in format.get(0)[1]:
+            self.val3 += '\n- '.join(get_list(data, i))
 
 
 class Part2:
@@ -32,15 +38,20 @@ class Part2:
         self.title = format.get(-3)
 
 
-        self.f1 = format.get(0)
-        self.val1 = '\n- '.join(get_list(data, 4))
+        self.f1 = format.get(0)[0]
+        self.val1 = ''
+        for i in format.get(0)[1]:
+            self.val1 += '\n- '.join(get_list(data, i))
 
-        self.f2 = format.get(1)
-        self.val2 = '\n- '.join(get_list(data, 5))
+        self.f2 = format.get(1)[0]
+        self.val2 = ''
+        for i in format.get(0)[1]:
+            self.val2 += '\n- '.join(get_list(data, i))
 
-        self.f3 = format.get(2)
-        self.val3 = '\n- '.join(get_list(data, 6))
-
+        self.f3 = format.get(2)[0]
+        self.val3 = ''
+        for i in format.get(0)[1]:
+            self.val3 += '\n- '.join(get_list(data, i))
 
 
 def get_list(
