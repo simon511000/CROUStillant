@@ -24,12 +24,12 @@ class Part1:
 
         self.f2 = format.get(1)[0]
         self.val2 = ''
-        for i in format.get(0)[1]:
+        for i in format.get(1)[1]:
             self.val2 = '\n- '.join(get_list(data, i))
 
         self.f3 = format.get(2)[0]
         self.val3 = ''
-        for i in format.get(0)[1]:
+        for i in format.get(2)[1]:
             self.val3 += '\n- '.join(get_list(data, i))
 
 
@@ -45,12 +45,12 @@ class Part2:
 
         self.f2 = format.get(1)[0]
         self.val2 = ''
-        for i in format.get(0)[1]:
+        for i in format.get(1)[1]:
             self.val2 += '\n- '.join(get_list(data, i))
 
         self.f3 = format.get(2)[0]
         self.val3 = ''
-        for i in format.get(0)[1]:
+        for i in format.get(2)[1]:
             self.val3 += '\n- '.join(get_list(data, i))
 
 
