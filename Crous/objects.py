@@ -38,19 +38,19 @@ class Part2:
         self.title = format.get(-3)
 
 
-        self.f1 = format.get(0)[0]
+        self.f1 = format.get(3)[0]
         self.val1 = ''
-        for i in format.get(0)[1]:
+        for i in format.get(3)[1]:
             self.val1 += '\n- '.join(get_list(data, i))
 
-        self.f2 = format.get(1)[0]
+        self.f2 = format.get(4)[0]
         self.val2 = ''
-        for i in format.get(1)[1]:
+        for i in format.get(4)[1]:
             self.val2 += '\n- '.join(get_list(data, i))
 
-        self.f3 = format.get(2)[0]
+        self.f3 = format.get(5)[0]
         self.val3 = ''
-        for i in format.get(2)[1]:
+        for i in format.get(5)[1]:
             self.val3 += '\n- '.join(get_list(data, i))
 
 
