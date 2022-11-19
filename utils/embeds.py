@@ -26,7 +26,7 @@ async def load_embed(client, rid, infos, dates, paris_dt):
 
     if len(dates) == 0:
         embeds.append(discord.Embed(title=f"Error 404", description=f"**`•` Le CROUS ne fournit pas d'information actuellement pour ce restaurant...**", color=client.color, url=infos.url))
-        options.append(discord.SelectOption(label="Indisponible...", description=f"{infos.nom}", value=index, default=True))
+        options.append(discord.SelectOption(label="Indisponible...", description=f"{infos.nom}", value=0, default=True))
     else:
         # Week-ends
         if int(paris_dt.strftime("%w")) == 6 or int(paris_dt.strftime("%w")) == 0: # 6: Saturday | 0: Sunday
@@ -34,7 +34,7 @@ async def load_embed(client, rid, infos, dates, paris_dt):
 
         if len(dates) == 0:
             embeds.append(discord.Embed(title=f"Error 404", description=f"**`•` Le CROUS ne fournit pas d'information actuellement pour ce restaurant...**", color=client.color, url=infos.url))
-            options.append(discord.SelectOption(label="Indisponible...", description=f"{infos.nom}", value=index, default=True))
+            options.append(discord.SelectOption(label="Indisponible...", description=f"{infos.nom}", value=0, default=True))
         else:
             # Sometimes, yesterday's Menu is still available, so we remove it
             if (paris_dt - datetime.timedelta(days=1)).strftime("%d-%m") == dates[0]:
