@@ -32,7 +32,7 @@ async def load_embed(client, rid, infos, dates, paris_dt):
         if int(paris_dt.strftime("%w")) == 6 or int(paris_dt.strftime("%w")) == 0: # 6: Saturday | 0: Sunday
             dates.pop(0) # remove Friday
 
-        if len(dates) == 1:
+        if len(dates) == 0:
             embeds.append(discord.Embed(title=f"Error 404", description=f"**`•` Le CROUS ne fournit pas d'information actuellement pour ce restaurant...**", color=client.color, url=infos.url))
             options.append(discord.SelectOption(label=clean_date, description=f"{infos.nom} - {date.replace('-', '/')}", value=index, default=True))
         else:
