@@ -23,15 +23,14 @@ async def load_embed(client, rid, infos, dates, paris_dt):
     embeds = []
     options = []
 
+    # Week-ends
+    if int(paris_dt.strftime("%w")) == 6 or int(paris_dt.strftime("%w")) == 0: # 6: Saturday | 0: Sunday
+        dates.pop(0) # remove Friday
+        
     if len(dates) == 0:
         embeds.appen(discord.Embed(title=f"Error 404", description=f"**`•` Le CROUS ne fournit pas d'information actuellement pour ce restaurant...**", color=client.color, url=infos.url))
         options.append(discord.SelectOption(label=clean_date, description=f"{infos.nom} - {date.replace('-', '/')}", value=index, default=True))
     else:
-        # Week-ends
-        if int(paris_dt.strftime("%w")) == 6 or int(paris_dt.strftime("%w")) == 0:
-            dates.pop(0) # remove Friday
-
-
         # Sometimes, yesterday's Menu is still available, so we remove it
         if (paris_dt - datetime.timedelta(days=1)).strftime("%d-%m") == dates[0]:
             dates.pop(0)
