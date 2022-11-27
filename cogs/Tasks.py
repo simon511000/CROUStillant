@@ -11,8 +11,6 @@ from datetime import time
 
 
 class Tasks(commands.Cog):
-    time = time(hour=1, minute=0, tzinfo=pytz.timezone("Europe/Paris"))
-
     def __init__(self, client):
         self.client = client
 
@@ -27,7 +25,7 @@ class Tasks(commands.Cog):
         self.daily_task.cancel()
 
 
-    @tasks.loop(time=time)
+    @tasks.loop(time=time(hour=1, minute=0, tzinfo=pytz.timezone("Europe/Paris")))
     async def daily_task(self):
         await run_task(self.client)
 
