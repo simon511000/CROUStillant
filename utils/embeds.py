@@ -1,4 +1,4 @@
-from Crous.requests import get_crous_menu
+from Crous.requests import get_crous_menu, restos_data
 
 from utils.image import image
 
@@ -25,7 +25,7 @@ async def load_embed(client, rid, infos, dates, paris_dt):
     
 
     if len(dates) == 0:
-        embeds.append(discord.Embed(title=f"Error 404", description=f"**`•` Le CROUS ne fournit pas d'information actuellement pour ce restaurant...**", color=client.color, url=infos.url))
+        embeds.append(discord.Embed(title=f"{restos_data.get(rid, {}).get('nom')} - Error 404", description=f"**`•` Le CROUS ne fournit pas d'information actuellement pour ce restaurant...**", color=client.color, url=infos.url))
         options.append(discord.SelectOption(label="Indisponible...", description=f"{infos.nom}", value=0, default=True))
     else:
         # Week-ends
@@ -33,7 +33,7 @@ async def load_embed(client, rid, infos, dates, paris_dt):
             dates.pop(0) # remove Friday
 
         if len(dates) == 0:
-            embeds.append(discord.Embed(title=f"Error 404", description=f"**`•` Le CROUS ne fournit pas d'information actuellement pour ce restaurant...**", color=client.color, url=infos.url))
+            embeds.append(discord.Embed(title=f"{restos_data.get(rid, {}).get('nom')} - Error 404", description=f"**`•` Le CROUS ne fournit pas d'information actuellement pour ce restaurant...**", color=client.color, url=infos.url))
             options.append(discord.SelectOption(label="Indisponible...", description=f"{infos.nom}", value=0, default=True))
         else:
             # Sometimes, yesterday's Menu is still available, so we remove it
@@ -84,6 +84,10 @@ async def load_embed(client, rid, infos, dates, paris_dt):
                 embeds.append(embed)
 
                 index += 1
+
+    if len(embeds) == 0:
+        embeds.append(discord.Embed(title=f"{restos_data.get(rid, {}).get('nom')} - Error 404", description=f"**`•` Le CROUS ne fournit pas d'information actuellement pour ce restaurant...**", color=client.color, url=infos.url))
+        options.append(discord.SelectOption(label="Indisponible...", description=f"{infos.nom}", value=0, default=True))
 
 
     ru_map = await image(

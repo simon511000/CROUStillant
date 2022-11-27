@@ -10,10 +10,10 @@ import pytz
 from datetime import time
 
 
-time_to_execute = time(hour=1, minute=0, tzinfo=pytz.timezone("Europe/Paris"))
-
-
 class Tasks(commands.Cog):
+    time_one = time(hour=1, minute=0, tzinfo=pytz.timezone("Europe/Paris"))
+    time_two = time(hour=9, minute=15, tzinfo=pytz.timezone("Europe/Paris"))
+
     def __init__(self, client):
         self.client = client
 
