@@ -13,14 +13,15 @@ class Menu(discord.ui.View):
         self.infos = infos
         self.embeds = embeds
         self.options = options
+        self.map = map
 
         with BytesIO() as image_binary:
-            map.save(image_binary, 'PNG')
+            self.map.save(image_binary, 'PNG')
             image_binary.seek(0)
             self.ru_map = discord.File(fp=image_binary, filename=f'map.png')
 
         if selects:
-            self.add_item(SelectMenu(self.infos, self.embeds, self.options))
+            self.add_item(SelectMenu(self.infos, self.embeds, self.options, self.map))
         
         self.add_item(discord.ui.Button(emoji="<:icons_link:1005031799208026196>", label="M'y rendre", url=f"https://www.google.fr/maps/dir//{self.infos.coords.lat},{self.infos.coords.long}/@{self.infos.coords.lat},{self.infos.coords.long},18.04", row=1))
 
@@ -76,11 +77,12 @@ class Menu(discord.ui.View):
 
 
 class SelectMenu(discord.ui.Select):
-    def __init__(self, infos, embeds, options):
+    def __init__(self, infos, embeds, options, map):
         super().__init__(placeholder="Select a Date", min_values=1, max_values=1, options=options, row=0)
         self.infos = infos
         self.embeds = embeds
         self.options = options
+        self.map = map
 
     async def callback(self, interaction: discord.Interaction):
-        return await interaction.response.send_message(embed=self.embeds[int(interaction.data['values'][0])], ephemeral=True, view=Menu(self.infos, self.embeds, self.options, False))
+        return await interaction.response.send_message(embed=self.embeds[int(interaction.data['values'][0])], ephemeral=True, view=Menu(self.infos, self.embeds, self.options, self.map, False))

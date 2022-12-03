@@ -66,8 +66,9 @@ async def load_embed(client, data: RU):
 
                     if msg != "":
                         embed.add_field(name=f"\u2063", value=msg)
-                            
-            
+
+                         
+                embed.set_thumbnail(url=client.avatar_url)
                 embed.set_footer(text=client.footer_text, icon_url=client.avatar_url)
                 embeds.append(embed)
                 options.append(discord.SelectOption(label=str(menu.date).title(), description=f"{data.info.zone} - {data.info.nom}", value=index, default=True if index == 0 else False))
