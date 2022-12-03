@@ -12,6 +12,7 @@ async def run_task(client):
         rows = await conn.fetch("SELECT * FROM settings")
     guilds = [dict(row) for row in rows]
 
+    one = False
     for guild in guilds:
         rid = guild.get('rid')
 
@@ -26,8 +27,10 @@ async def run_task(client):
             data = client.cache[rid][0]
             view = client.cache[rid][1]
         
-
-        data[3].fp.seek(0)
+        if one == False:
+            one = True
+        else:
+            data[3].fp.seek(0)
 
         try:
             channel: discord.TextChannel = client.get_channel(guild.get('channel'))

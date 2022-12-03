@@ -53,8 +53,6 @@ class Commands(commands.Cog):
         data = await load_embed(interaction.client, d)
         view = Menu(d.info, data[0], data[1])
 
-        data[3].fp.seek(0)
-
         try:
             msg = await salon.send(embeds=[data[2], data[0][0]], file=data[3], view=view)
 
@@ -78,6 +76,7 @@ class Commands(commands.Cog):
 
     @crous.autocomplete('restaurant')
     async def crous_autocomplete(
+        self,
         interaction: discord.Interaction,
         current: str,
     ):
