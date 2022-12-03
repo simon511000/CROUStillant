@@ -108,11 +108,11 @@ async def load_embed(client, data: RU):
                         msg = ""
                             
             
-            embed.set_footer(text=client.footer_text, icon_url=client.avatar_url)
-            embeds.append(embed)
-            options.append(discord.SelectOption(label=str(menu.date).title(), description=f"{data.info.zone} - {data.info.nom}", value=index, default=True if index == 0 else False))
-            
-            index += 1
+                embed.set_footer(text=client.footer_text, icon_url=client.avatar_url)
+                embeds.append(embed)
+                options.append(discord.SelectOption(label=str(menu.date).title(), description=f"{data.info.zone} - {data.info.nom}", value=index, default=True if index == 0 else False))
+                
+                index += 1
 
     if len(embeds) == 0:
         embed = discord.Embed(title=f"{data.info.nom} - Error 404", description=f"**`•` Le CROUS ne fournit pas d'information actuellement pour ce restaurant...**\n**`•` Mis à jour**: <t:{int(datetime.datetime.utcnow().timestamp())}:R> (<t:{int(datetime.datetime.utcnow().timestamp())}>)", color=client.color, url=data.info.url)
