@@ -53,11 +53,10 @@ class Commands(commands.Cog):
         data = await load_embed(interaction.client, d)
         view = Menu(d.info, data[0], data[1])
 
-        ru_map = data[3]
-        ru_map.fp.seek(0)
+        data[3].fp.seek(0)
 
         try:
-            msg = await salon.send(embeds=[data[2], data[0][0]], file=ru_map, view=view)
+            msg = await salon.send(embeds=[data[2], data[0][0]], file=data[3], view=view)
 
             async with interaction.client.pool.acquire() as conn:
                 rows = await conn.fetch("SELECT * FROM settings WHERE id = $1", interaction.guild.id)
@@ -77,7 +76,7 @@ class Commands(commands.Cog):
             return await interaction.followup.send(content="Une erreur inatendue est survenu...", ephemeral=True) 
 
 
-    @crous.autocomplete('restaurants')
+    @crous.autocomplete('restaurant')
     async def crous_autocomplete(
         interaction: discord.Interaction,
         current: str,

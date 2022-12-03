@@ -27,25 +27,24 @@ async def run_task(client):
             view = client.cache[rid][1]
         
 
-        ru_map = data[3]
-        ru_map.fp.seek(0)
+        data[3].fp.seek(0)
 
         try:
             channel: discord.TextChannel = client.get_channel(guild.get('channel'))
 
             if guild.get('message') == None:
-                message = await channel.send(embeds=[data[2], data[0][0]], file=ru_map, view=view)
+                message = await channel.send(embeds=[data[2], data[0][0]], file=data[3], view=view)
 
                 async with client.pool.acquire() as conn:
                     await conn.execute("UPDATE settings SET message = $1 WHERE id = $2", message.id, guild.get('id'))
             else:
                 try:
                     message = await channel.fetch_message(guild.get('message'))
-                    await message.edit(embeds=[data[2], data[0][0]], attachments=[ru_map], view=view)
+                    await message.edit(embeds=[data[2], data[0][0]], attachments=[data[3]], view=view)
                 except:
                     # If the message was deleted, the bot tries to send the message again...
                     try:
-                        message = await channel.send(embeds=[data[2], data[0][0]], file=ru_map, view=view)
+                        message = await channel.send(embeds=[data[2], data[0][0]], file=data[3], view=view)
 
                         async with client.pool.acquire() as conn:
                             await conn.execute("UPDATE settings SET message = $1 WHERE id = $2", message.id, guild.get('id'))
