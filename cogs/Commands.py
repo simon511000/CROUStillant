@@ -68,9 +68,9 @@ class Commands(commands.Cog):
                 async with interaction.client.pool.acquire() as conn:
                     await conn.execute("UPDATE settings SET rid = $1, channel = $2, message = $3, timestamp = $4 WHERE id = $5", rid, salon.id, msg.id, datetime.utcnow().timestamp(), interaction.guild.id)
 
-            return await interaction.followup.send(content=f"Le Menu est configurer dans {salon.mention}, il se mettra à jour chaque jour entre miniut et 3 heures!", ephemeral=True)
+            return await interaction.followup.send(content=f"Le Menu est configuré dans {salon.mention}, il se mettra à jour chaque jour entre minuit et 3 heures!", ephemeral=True)
         except discord.errors.Forbidden:
-            return await interaction.followup.send(content=f"Je n'ai pas la permission d'envoyé des messages dans {salon.mention}", ephemeral=True)
+            return await interaction.followup.send(content=f"Je n'ai pas la permission d'envoyer des messages dans {salon.mention}...", ephemeral=True)
         except Exception as e:
             interaction.client.log.info(e)
             return await interaction.followup.send(content="Une erreur inatendue est survenu...", ephemeral=True) 
