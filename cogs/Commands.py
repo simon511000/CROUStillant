@@ -12,33 +12,14 @@ from discord.ext import commands
 
 import typing
 import pytz
-
+import json
 
 from datetime import datetime, timedelta
+from pathlib import Path
 
 
+path = str(Path(__file__).parents[0].parents[0])
 
-# All the restaurants, need to be added later...
-"""
-        restaurant: typing.Literal[
-            "CHALONS - ENSAM - Resto U ENSAM",
-            "CHARLEVILLE - Centre - Resto U Maison des étudiants",
-            "CHARLEVILLE - P.H.T. - Resto U Moulin Le Blanc",
-            "REIMS - Campus Lettres - Resto U Jean-Charles Prost",
-            "REIMS - Campus Lettres - Resto U Paul Fort",
-            "REIMS - Campus Lettres - Resto U Pôle santé",
-            "REIMS - Campus Lettres - Resto U SciencesPo",
-            "REIMS - Campus Sciences - Resto U Moulin de la Housse",
-            "REIMS - Campus Sciences - Resto U INSPE de REIMS",
-            "REIMS - Campus Sciences - Cafet IUT Reims",
-            "REIMS - Campus Sciences - Cafet Evariste Galois",
-            "REIMS - Campus Sciences - Cafet Sciences",
-            "TROYES - Campus - Resto U Les Lombards",
-            "TROYES - Campus - Cafet IUT Troyes",
-            "TROYES - Campus - Brasserie UTT",
-            "TROYES - Centre - Resto U Les Courtines"
-        ], 
-"""
 
 class Commands(commands.Cog):
     def __init__(self, client):
@@ -52,12 +33,7 @@ class Commands(commands.Cog):
     async def crous(
         self, 
         interaction: discord.Interaction,
-        restaurant: typing.Literal[
-            "REIMS - Campus Lettres - Resto U Jean-Charles Prost",
-            "REIMS - Campus Sciences - Resto U Moulin de la Housse",
-            "REIMS - Campus Sciences - Resto U INSPE de REIMS",
-            "TROYES - Campus - Resto U Les Lombards",
-        ], 
+        restaurant: str, 
         salon : discord.TextChannel,
     ):
         await interaction.response.defer(ephemeral=True)
@@ -108,11 +84,31 @@ class Commands(commands.Cog):
             return await interaction.followup.send(content="Une erreur inatendue est survenu...", ephemeral=True) 
 
 
-      
+    @crous.autocomplete('restaurants')
+    async def crous_autocomplete(
+        interaction: discord.Interaction,
+        current: str,
+    ):
+        with open(f"{path}/data.json", "r") as f:
+            config = json.load(f)
+
+        count = 0 
+        result = []
+        for x in config:
+            if str(x).startswith("r") and current.lower() in str(config[x]['nom']).lower():
+                result.append(app_commands.Choice(name=f"{config[x]['zone']} - {config[x]['nom']}", value=x))
+                count += 1
+
+            if count == 25:
+                break
+
+        return result
+
+
+
     @commands.command(help="sync", hidden=True)
     @commands.is_owner()
     async def sync(self, ctx):
-        await self.client.tree.sync(guild=discord.Object(id=802797875457294347))
         await self.client.tree.sync()
         await ctx.send("Done")
 

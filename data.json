@@ -1,0 +1,189 @@
+{
+    "r103": 
+    {
+        "url": "https://www.crous-reims.fr/restaurant/resto-u-moulin-de-la-housse/", 
+        "type": "Restaurant",
+        "zone": "REIMS - Campus Sciences", 
+        "nom": "Resto U Moulin de la Housse", 
+        "adresse": "4 chemin des Rouliers", 
+        "cp": "51100", 
+        "ville": "Reims", 
+        "tel": "03.26.85.30.18", 
+        "mail": "mhc@crous-reims.fr", 
+        "horaires": 
+        {
+            "self": "11h30 - 13h45", 
+            "cafet": "11h30 - 15h"
+        }, 
+        "acces": 
+        {
+            "bus": 
+            [
+                "3", 
+                "11"
+            ], 
+            "pmr": true
+        }, 
+        "wifi": true, 
+        "paiement": 
+        {
+            "cb": true, 
+            "izly": true
+        },
+        "geolocalisation":
+        {
+            "lat": 49.242,
+            "long": 4.06041
+        }
+    },
+    "r104": 
+    {
+        "url": "https://www.crous-reims.fr/restaurant/resto-u-jean-charles-prost/", 
+        "type": "Restaurant",
+        "zone": "REIMS - Campus Lettres", 
+        "nom": "Resto U Jean-Charles Prost", 
+        "adresse": "Rue Rilly la Montagne", 
+        "cp": "51100", 
+        "ville": "Reims", 
+        "tel": "03.26.08.04.80", 
+        "mail": "jcp@crous-reims.fr", 
+        "horaires": 
+        {
+            "self": "11h30 - 13h45", 
+            "cafet": "Lundi au jeudi : 7h30 - 17h30. Vendredi : 7h30 - 16h. Samedi : 8h30 - 13h"
+        }, 
+        "acces": 
+        {
+            "bus": 
+            [
+                "13"
+            ], 
+            "tram":
+            [
+                "A",
+                "B" 
+            ],
+            "pmr": true
+        }, 
+        "wifi": true, 
+        "paiement": 
+        {
+            "cb": true, 
+            "izly": true
+        },
+        "geolocalisation":
+        {
+            "lat": 49.236,
+            "long": 4.00339
+        }
+    },
+    "r105": 
+    {
+        "url": "https://www.crous-reims.fr/restaurant/resto-u-inspe-de-reims/", 
+        "type": "Restaurant",
+        "zone": "REIMS - Campus Sciences", 
+        "nom": "Resto U INSPE de REIMS", 
+        "adresse": "23 Rue Clément Ader", 
+        "cp": "51100", 
+        "ville": "Reims", 
+        "tel": "03.26.82.96.85", 
+        "horaires": 
+        {
+            "self": "11h30 - 13h45"
+        }, 
+        "acces": 
+        {
+            "bus": 
+            [
+                "6"
+            ], 
+            "pmr": false
+        }, 
+        "wifi": true, 
+        "paiement": 
+        {
+            "cb": true, 
+            "izly": true
+        },
+        "geolocalisation":
+        {    
+            "lat": 49.2323,
+            "long": 4.06817
+        }
+    },
+    "r106": 
+    {
+        "url": "https://www.crous-reims.fr/restaurant/resto-u-paul-fort/", 
+        "type": "Restaurant",
+        "zone": "REIMS - Campus Lettres", 
+        "nom": "Resto U Paul Fort", 
+        "adresse": "8 Bd Franchet D'Esperey", 
+        "cp": "51100", 
+        "ville": "Reims", 
+        "horaires": 
+        {
+            "self": "11h30 - 13h45"
+        }, 
+        "acces": 
+        {
+            "bus": 
+            [
+                "11"
+            ],
+            "tram": 
+            [
+                "A",
+                "B"
+            ],
+            "pmr": false
+        }, 
+        "wifi": true, 
+        "paiement": 
+        {
+            "cb": true, 
+            "izly": true
+        },
+        "geolocalisation": 
+        {    
+            "lat": 49.2414,
+            "long": 4.01523
+        }
+    },
+
+    "r111": 
+    {
+        "url": "https://www.crous-reims.fr/restaurant/resto-u-les-lombards/", 
+        "type": "Restaurant",
+        "zone": "TROYES - Campus", 
+        "nom": "Resto U Les Lombards", 
+        "adresse": "28 Place Léonard de VINCI", 
+        "cp": "10430", 
+        "ville": "Rosières-Près-Troyes", 
+        "tel": "03.25.78.17.44",
+        "horaires": 
+        {
+            "self": "11h30 - 13h45"
+        }, 
+        "acces": 
+        {
+            "bus": 
+            [
+                "6",
+                "10",
+                "11"
+            ],
+            "pmr": false
+        }, 
+        "wifi": true, 
+        "paiement": 
+        {
+            "cb": true, 
+            "izly": true
+        },
+        "geolocalisation":
+        {    
+            "lat": 48.268765,
+            "long": 4.069626
+        }
+    }
+}

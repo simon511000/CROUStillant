@@ -1,6 +1,6 @@
-from Crous.requests import get_crous_menu, restos_data
+from Crous.objects import RU
 
-from utils.image import image
+from utils.data import icons
 
 
 import discord
@@ -11,89 +11,112 @@ import pytz
 
 
 def get_clean_date(day, month, year):
-    jours = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"]
-    mois = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembtre", "Octobre", "Novembre", "Décembre"]
+    jours = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"]
+    mois = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembtre", "octobre", "novembre", "décembre"]
 
     date = pytz.timezone("Europe/Paris").localize(datetime.datetime(int(year), int(month), int(day)), is_dst=None)
 
     return f"{jours[int(date.strftime('%w'))-1]} {day} {mois[int(date.strftime('%m'))-1]}"
 
 
-async def load_embed(client, rid, infos, dates, paris_dt):
+async def load_embed(client, data: RU):
     embeds = []
     options = []
     
-
-    if len(dates) == 0:
-        embeds.append(discord.Embed(title=f"{restos_data.get(rid, {}).get('nom')} - Error 404", description=f"**`•` Le CROUS ne fournit pas d'information actuellement pour ce restaurant...**", color=client.color, url=infos.url))
-        options.append(discord.SelectOption(label="Indisponible...", description=f"{infos.nom}", value=0, default=True))
+    if data.info.acces.bus == []:
+        bus = ""
     else:
-        # Week-ends
-        if int(paris_dt.strftime("%w")) == 6 or int(paris_dt.strftime("%w")) == 0: # 6: Saturday | 0: Sunday
-            dates.pop(0) # remove Friday
+        bus = f"\n╰ {icons['bus']} **Bus**: `{', '.join(data.info.acces.bus)}`"
 
-        if len(dates) == 0:
-            embeds.append(discord.Embed(title=f"{restos_data.get(rid, {}).get('nom')} - Error 404", description=f"**`•` Le CROUS ne fournit pas d'information actuellement pour ce restaurant...**", color=client.color, url=infos.url))
-            options.append(discord.SelectOption(label="Indisponible...", description=f"{infos.nom}", value=0, default=True))
-        else:
-            # Sometimes, yesterday's Menu is still available, so we remove it
-            if (paris_dt - datetime.timedelta(days=1)).strftime("%d-%m") == dates[0]:
-                dates.pop(0)
+    if data.info.acces.pmr == []:
+        pmr = ""
+    else:
+        pmr = f"\n╰ {icons['pmr']} **PMR**: `Accessible aux personnes à mobilité réduite`"
 
+    if data.info.wifi:
+        wifi = f"\n**`•` {icons['wifi']} Wifi**: `Disponible`"
+    else:
+        wifi = ""
 
-            index = 0
-            for date in dates:
-                try:
-                    year = paris_dt.strftime('%Y')
+    if data.info.paiement.izly:
+        izly = f"\n**`•` {icons['izly']} IZLY**: `Disponible`"
+    else:
+        izly = ""
 
-                    month = str(date.split('-')[1])
-                    day = str(date.split('-')[0])
+    if data.info.paiement.cb:
+        cb = f"\n**`•` {icons['cb']} Carte Bancaire**: `Disponible`"
+    else:
+        cb = ""
+    
+    if data.info.horaires.midi_cafet != "":
+        cafet = f"\n╰ **Cafétéria**: `{data.info.horaires.midi_cafet}`"
+    else:
+        cafet = ""
+    
+    default=discord.Embed(title=f"{data.info.nom}", description=f"**`•` Campus**: `{data.info.campus}`\n**`•` Adresse**: `{data.info.adresse}, {data.info.cp} {data.info.ville}`{wifi}\n\n**`•` Téléphone**: `{data.info.tel}`\n**`•` Courriel**: `{data.info.mail}`", color=client.color, url=data.info.url)
+    default.add_field(name=f"Horraires:", value=f"╰ **Self**: `{data.info.horaires.midi_self}`{cafet}")
+    default.add_field(name=f"Paiements:", value=f"{cb}{izly}", inline=False)
+    default.add_field(name=f"Accès:", value=f"{bus}{pmr}", inline=False)
+    default.set_thumbnail(url=client.avatar_url)
+    default.add_field(url=f"https://data.enseignementsup-recherche.gouv.fr/explore/embed/dataset/fr_crous_restauration_france_entiere/map/?location=18,{data.info.coords.lat},{data.info.coords.long}&basemap=mapbox.streets")
+    default.set_footer(text=client.footer_text, icon_url=client.avatar_url)
+   
+        
+    if len(data.dates) == 0:
+        embed = discord.Embed(title=f"{data.info.nom} - Error 404", description=f"**`•` Le CROUS ne fournit pas d'information actuellement pour ce restaurant...**\n**`•` Mis à jour**: <t:{int(datetime.datetime.utcnow().timestamp())}:R> (<t:{int(datetime.datetime.utcnow().timestamp())}>)", color=client.color, url=data.info.url)
+        embed.set_footer(text=client.footer_text, icon_url=client.avatar_url)
+        embeds.append(embed)
+        options.append(discord.SelectOption(label="Indisponible...", description=f"{data.info.nom}", value=0, default=True))
+    else:
+        paris_dt = pytz.timezone("Europe/Paris").localize(datetime.datetime.now(), is_dst=None)
 
-                    clean_date = get_clean_date(int(day), int(month), int(year))
+        index = 0
 
+        for menu in data.menus:
+            pass_menu = False
+            embed = None
 
-                    menu = await get_crous_menu(
-                        client.session, 
-                        rid, 
-                        f"{year}-{month}-{day}"
-                    )
+            for i in range(1, 4): # Check Week-ends because sometimes Friday's menu is still displayeds
+                new_dt = paris_dt - datetime.timedelta(days=i) 
+                if get_clean_date(int(new_dt.strftime("%d")), int(new_dt.strftime("%m")), int(new_dt.strftime("%Y"))) == menu.date:
+                    pass_menu = True
+            
+            if not pass_menu:
+                if not embed:
+                    embed = discord.Embed(title=f"{data.info.nom}", description=f"**`•` Menu du `{str(menu.date).title()}`**\n**`•` Mis à jour**: <t:{int(datetime.datetime.utcnow().timestamp())}:R> (<t:{int(datetime.datetime.utcnow().timestamp())}>)\n\u2063", color=client.color, url=data.info.url)
 
-                    if month.startswith('0'):
-                        month = month[1:]
-                    if day.startswith('0'):
-                        day = day[1:]
-
-                    embed = discord.Embed(title=f"{infos.nom}", description=f"**`•` Menu du `{date.replace('-', '/')}/{year}`**\n**`•` Mis à jour**: <t:{int(datetime.datetime.utcnow().timestamp())}:R> (<t:{int(datetime.datetime.utcnow().timestamp())}>)\n\u2063", color=client.color, url=infos.url)
-                    embed.add_field(name=f"{menu.part1.title}\n\u2063", value=f"**{menu.part1.f1}**:\n- {menu.part1.val1}\n\n**{menu.part1.f2}**:\n- {menu.part1.val2}\n\n**{menu.part1.f3}**:\n- {menu.part1.val3}")
-                    embed.add_field(name="ㅤㅤ", value="ㅤㅤ")
-                    if menu.part2.val3 == "":
-                        embed.add_field(name=f"{menu.part2.title}\n\u2063", value=f"**{menu.part2.f1}**:\n- {menu.part2.val1}\n\n**{menu.part2.f2}**:\n- {menu.part2.val2}")
-                    else:
-                        embed.add_field(name=f"{menu.part2.title}\n\u2063", value=f"**{menu.part2.f1}**:\n- {menu.part2.val1}\n\n**{menu.part2.f2}**:\n- {menu.part2.val2}\n\n**{menu.part2.f3}**:\n- {menu.part2.val3}")
-                    embed.set_thumbnail(url=client.avatar_url)
-                    embed.set_footer(text=client.footer_text, icon_url=client.avatar_url)
-                except Exception as e:
-                    client.log.info(e)
-                    embed = discord.Embed(title=f"Error 404", description=f"**`•` `{date.replace('-', '/')}/{year}` Le CROUS ne fournit pas d'information actuellement pour ce restaurant...**", color=client.color, url=infos.url)
-
-                if index == 0:
-                    options.append(discord.SelectOption(label=clean_date, description=f"{infos.nom} - {date.replace('-', '/')}", value=index, default=True))
+                if isinstance(menu.midi, str):
+                    embed.add_field(name=f"\u2063", value=f"**{menu.midi}**")
                 else:
-                    options.append(discord.SelectOption(label=clean_date, description=f"{infos.nom} - {date.replace('-', '/')}", value=index, default=False))
-                
-                embeds.append(embed)
+                    count = 0
+                    msg = ""
 
-                index += 1
+                    for i in menu.midi:
+                        msg += f"**{i.categorie}**\n{'\n- '.join(i.data)}\n"
+                        count += 1
+
+                        if count == 3:
+                            embed.add_field(name=f"\u2063", value=msg)
+                            embed.add_field(name="ㅤㅤ", value="ㅤㅤ")
+                            msg = ""
+
+                    if msg == "":
+                        embed.add_field(name=f"\u2063", value=msg)
+                        embed.add_field(name="ㅤㅤ", value="ㅤㅤ")
+                        msg = ""
+                            
+            
+            embed.set_footer(text=client.footer_text, icon_url=client.avatar_url)
+            embeds.append(embed)
+            options.append(discord.SelectOption(label=str(menu.date).title(), description=f"{data.info.zone} - {data.info.nom}", value=index, default=True if index == 0 else False))
+            
+            index += 1
 
     if len(embeds) == 0:
-        embeds.append(discord.Embed(title=f"{restos_data.get(rid, {}).get('nom')} - Error 404", description=f"**`•` Le CROUS ne fournit pas d'information actuellement pour ce restaurant...**", color=client.color, url=infos.url))
-        options.append(discord.SelectOption(label="Indisponible...", description=f"{infos.nom}", value=0, default=True))
+        embed = discord.Embed(title=f"{data.info.nom} - Error 404", description=f"**`•` Le CROUS ne fournit pas d'information actuellement pour ce restaurant...**\n**`•` Mis à jour**: <t:{int(datetime.datetime.utcnow().timestamp())}:R> (<t:{int(datetime.datetime.utcnow().timestamp())}>)", color=client.color, url=data.info.url)
+        embed.set_footer(text=client.footer_text, icon_url=client.avatar_url)
+        embeds.append(embed)
+        options.append(discord.SelectOption(label="Indisponible...", description=f"{data.info.nom}", value=0, default=True))
 
 
-    ru_map = await image(
-        url=f"https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/geojson(%7B%22type%22%3A%22Point%22%2C%22coordinates%22%3A%5B{infos.coords[0]}1%2C{infos.coords[1]}%5D%7D)/{infos.coords[0]},{infos.coords[1]},15.25,0,0/1000x400?access_token={client.mapbox}",
-        title="map",
-        session=client.session
-    )
-
-    return (embeds, options, ru_map)
+    return (embeds, options, default)
