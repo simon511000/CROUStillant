@@ -71,7 +71,8 @@ class Commands(commands.Cog):
             return await interaction.followup.send(content=f"Le Menu est configurer dans {salon.mention}, il se mettra à jour chaque jour entre miniut et 3 heures!", ephemeral=True)
         except discord.errors.Forbidden:
             return await interaction.followup.send(content=f"Je n'ai pas la permission d'envoyé des messages dans {salon.mention}", ephemeral=True)
-        except:
+        except Exception as e:
+            interaction.client.log.info(e)
             return await interaction.followup.send(content="Une erreur inatendue est survenu...", ephemeral=True) 
 
 

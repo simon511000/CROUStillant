@@ -40,7 +40,7 @@ async def run_task(client):
             else:
                 try:
                     message = await channel.fetch_message(guild.get('message'))
-                    await message.edit(embed=data[0][0], view=view)
+                    await message.edit(embed=data[0][0], attachments=[None], view=view)
                 except:
                     # If the message was deleted, the bot tries to send the message again...
                     try:

@@ -28,6 +28,11 @@ class Menu(discord.ui.View):
 
     @discord.ui.button(emoji="<:icons_info:1005031802114674760>", label="Informations", style=discord.ButtonStyle.gray, row=1)
     async def informations(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if self.infos.mail == "":
+            mail = ""
+        else:
+            mail = f"\n**`•` Courriel**: `{self.infos.mail}`"
+        
         if self.infos.acces.bus == []:
             bus = ""
         else:
@@ -37,6 +42,11 @@ class Menu(discord.ui.View):
             pmr = ""
         else:
             pmr = f"\n╰ {icons['pmr']} **PMR**: `Accessible aux personnes à mobilité réduite`"
+
+        if self.infos.acces.tram == []:
+            tram = ""
+        else:
+            tram = f"\n╰ 🚋 **Tram**: `{', '.join(self.infos.acces.tram)}`"
 
         if self.infos.wifi:
             wifi = f"\n**`•` {icons['wifi']} Wifi**: `Disponible`"
@@ -58,10 +68,10 @@ class Menu(discord.ui.View):
         else:
             cafet = ""
         
-        embed=discord.Embed(title=f"{self.infos.nom}", description=f"**`•` Campus**: `{self.infos.zone}`\n**`•` Adresse**: `{self.infos.adresse}, {self.infos.cp} {self.infos.ville}`{wifi}\n\n**`•` Téléphone**: `{self.infos.tel}`\n**`•` Courriel**: `{self.infos.mail}`", color=interaction.client.color, url=self.infos.url)
+        embed=discord.Embed(title=f"{self.infos.nom}", description=f"**`•` Campus**: `{self.infos.zone}`\n**`•` Adresse**: `{self.infos.adresse}, {self.infos.cp} {self.infos.ville}`{wifi}\n\n**`•` Téléphone**: `{self.infos.tel}`{mail}", color=interaction.client.color, url=self.infos.url)
         embed.add_field(name=f"Horraires:", value=f"╰ **Self**: `{self.infos.horaires.midi_self}`{cafet}")
         embed.add_field(name=f"Paiements:", value=f"{cb}{izly}", inline=False)
-        embed.add_field(name=f"Accès:", value=f"{bus}{pmr}", inline=False)
+        embed.add_field(name=f"Accès:", value=f"{pmr}{bus}{tram}", inline=False)
         embed.set_thumbnail(url=interaction.client.avatar_url)
         embed.set_image(url=f"attachment://map.png")
         embed.set_footer(text=interaction.client.footer_text, icon_url=interaction.client.avatar_url)
