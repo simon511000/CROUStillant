@@ -94,18 +94,16 @@ async def load_embed(client, data: RU):
 
                     for i in menu.midi:
                         w = '\n- '.join(i.data)
-                        msg += f"**{i.categorie}**\n- {w}\n\n\n"
+                        msg += f"**{i.categorie}**\n- {w}\n\n"
                         count += 1
 
                         if count == 3:
                             embed.add_field(name=f"\u2063", value=msg)
                             embed.add_field(name="ㅤㅤ", value="ㅤㅤ")
                             msg = ""
-                            count = 0
 
                     if msg != "":
                         embed.add_field(name=f"\u2063", value=msg)
-                        embed.add_field(name="ㅤㅤ", value="ㅤㅤ")
                             
             
                 embed.set_footer(text=client.footer_text, icon_url=client.avatar_url)

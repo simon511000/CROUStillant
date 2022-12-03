@@ -60,6 +60,8 @@ class Commands(commands.Cog):
             ru_map = discord.File(fp=image_binary, filename=f'map.png')
 
         try:
+            await salon.send(embed=data[0][0])
+            await salon.send(embed=data[2])
             msg = await salon.send(embeds=[data[2], data[0][0]], file=ru_map, view=view)
 
             async with interaction.client.pool.acquire() as conn:
