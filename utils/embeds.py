@@ -94,16 +94,16 @@ async def load_embed(client, data: RU):
 
                     for i in menu.midi:
                         w = '\n- '.join(i.data)
-                        msg += f"**{i.categorie}**\n- {w}\n"
+                        msg += f"**{i.categorie}**\n- {w}\n\n\n"
                         count += 1
 
-                        if count == 3:
-                            embed.add_field(name=f"\u2063\n\u2063", value=msg)
+                        if count % 3 == 0:
+                            embed.add_field(name=f"\u2063", value=msg)
                             embed.add_field(name="ㅤㅤ", value="ㅤㅤ")
                             msg = ""
 
                     if msg == "":
-                        embed.add_field(name=f"\u2063\n\u2063", value=msg)
+                        embed.add_field(name=f"\u2063", value=msg)
                         embed.add_field(name="ㅤㅤ", value="ㅤㅤ")
                         msg = ""
                             
