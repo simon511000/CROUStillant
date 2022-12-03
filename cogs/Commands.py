@@ -1,6 +1,5 @@
-from Crous.requests import get_crous_info, load_dates
+from Crous.requests import get_menu
 
-from utils.data import restos
 from utils.embeds import load_embed
 from utils.views import Menu
 
@@ -10,8 +9,6 @@ from discord import app_commands
 from discord.ext import commands
 
 
-import typing
-import pytz
 import json
 
 from datetime import datetime, timedelta
@@ -37,34 +34,27 @@ class Commands(commands.Cog):
         salon : discord.TextChannel,
     ):
         await interaction.response.defer(ephemeral=True)
-        
-
-        paris_dt = pytz.timezone("Europe/Paris").localize(datetime.now(), is_dst=None)
-
-        # Week-ends
-        if int(paris_dt.strftime("%w")) == 5:
-            new_date =paris_dt + timedelta(hours=72)
-        elif int(paris_dt.strftime("%w")) == 6:
-            new_date = paris_dt + timedelta(hours=48)
-        else:
-            new_date = paris_dt
 
 
-        dates = await load_dates(
-            self.client.session,
-            restos[restaurant], 
-            new_date.strftime("%Y-%m-%d")
-        )
+        with open(f"{path}/data.json", "r") as f:
+            config = json.load(f)
 
-        infos = get_crous_info(
-            restos[restaurant]
-        )
-        
-        data = await load_embed(self.client, restos[restaurant], infos, dates, paris_dt)
-        view = Menu(infos, data[0], data[1], data[2])
-        
         try:
-            msg = await salon.send(embed=data[0][0], view=view)
+            if str(restaurant).startswith("r"):
+                config[restaurant]['nom']
+                rid = restaurant
+            else:
+                raise AttributeError
+        except:
+            return await interaction.followup.send(content="Ce restaurant n'existe pas!", ephemeral=True)
+
+        d = await get_menu(interaction.client.session, rid)
+        
+        data = await load_embed(interaction.client, d)
+        view = Menu(d.info, data[0], data[1])
+
+        try:
+            msg = await salon.send(embeds=[data[2], data[0][0]], view=view)
 
             async with interaction.client.pool.acquire() as conn:
                 rows = await conn.fetch("SELECT * FROM settings WHERE id = $1", interaction.guild.id)
@@ -72,10 +62,10 @@ class Commands(commands.Cog):
 
             if data == []:
                 async with self.client.pool.acquire() as conn:
-                    await conn.execute("INSERT INTO settings (id, rid, channel, message, timestamp) VALUES ($1, $2, $3, $4, $5)", interaction.guild.id, restos[restaurant], salon.id, msg.id, datetime.utcnow().timestamp())
+                    await conn.execute("INSERT INTO settings (id, rid, channel, message, timestamp) VALUES ($1, $2, $3, $4, $5)", interaction.guild.id, rid, salon.id, msg.id, datetime.utcnow().timestamp())
             else:
                 async with interaction.client.pool.acquire() as conn:
-                    await conn.execute("UPDATE settings SET rid = $1, channel = $2, message = $3, timestamp = $4 WHERE id = $5", restos[restaurant], salon.id, msg.id, datetime.utcnow().timestamp(), interaction.guild.id)
+                    await conn.execute("UPDATE settings SET rid = $1, channel = $2, message = $3, timestamp = $4 WHERE id = $5", rid, salon.id, msg.id, datetime.utcnow().timestamp(), interaction.guild.id)
 
             return await interaction.followup.send(content=f"Le Menu est configurer dans {salon.mention}, il se mettra à jour chaque jour entre miniut et 3 heures!", ephemeral=True)
         except discord.errors.Forbidden:

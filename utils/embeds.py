@@ -58,7 +58,7 @@ async def load_embed(client, data: RU):
     default.add_field(name=f"Paiements:", value=f"{cb}{izly}", inline=False)
     default.add_field(name=f"Accès:", value=f"{bus}{pmr}", inline=False)
     default.set_thumbnail(url=client.avatar_url)
-    default.add_field(url=f"https://data.enseignementsup-recherche.gouv.fr/explore/embed/dataset/fr_crous_restauration_france_entiere/map/?location=18,{data.info.coords.lat},{data.info.coords.long}&basemap=mapbox.streets")
+    default.set_image(url=f"https://data.enseignementsup-recherche.gouv.fr/explore/embed/dataset/fr_crous_restauration_france_entiere/map/?location=18,{data.info.coords.lat},{data.info.coords.long}&basemap=mapbox.streets")
     default.set_footer(text=client.footer_text, icon_url=client.avatar_url)
    
         

@@ -102,7 +102,7 @@ class Info:
 
         self.url = data.get('url')
         self.type = data.get('type', '')
-        self.zone = data.get('campus', '')
+        self.zone = data.get('zone', '')
         self.nom = data.get('nom', '')
         self.adresse = data.get('adresse', '')
         self.cp = data.get('cp', '')
