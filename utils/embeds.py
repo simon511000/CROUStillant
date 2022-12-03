@@ -97,15 +97,15 @@ async def load_embed(client, data: RU):
                         msg += f"**{i.categorie}**\n- {w}\n\n\n"
                         count += 1
 
-                        if count % 3 == 0:
+                        if count == 3:
                             embed.add_field(name=f"\u2063", value=msg)
                             embed.add_field(name="ㅤㅤ", value="ㅤㅤ")
                             msg = ""
+                            count = 0
 
-                    if msg == "":
+                    if msg != "":
                         embed.add_field(name=f"\u2063", value=msg)
                         embed.add_field(name="ㅤㅤ", value="ㅤㅤ")
-                        msg = ""
                             
             
                 embed.set_footer(text=client.footer_text, icon_url=client.avatar_url)
