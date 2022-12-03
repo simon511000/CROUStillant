@@ -123,7 +123,6 @@ async def load_embed(client, data: RU):
 
     ru_map = await image(
         url=f"https://data.enseignementsup-recherche.gouv.fr/explore/embed/dataset/fr_crous_restauration_france_entiere/map/?location=18,{data.info.coords.lat},{data.info.coords.long}&basemap=mapbox.streets",
-        title="map",
         session=client.session
     )
 

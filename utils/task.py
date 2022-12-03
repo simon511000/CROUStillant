@@ -7,12 +7,14 @@ from utils.views import Menu
 import discord
 
 
+from io import BytesIO
+
+
 async def run_task(client):
     async with client.pool.acquire() as conn:
         rows = await conn.fetch("SELECT * FROM settings")
     guilds = [dict(row) for row in rows]
 
-    one = False
     for guild in guilds:
         rid = guild.get('rid')
 
@@ -26,28 +28,28 @@ async def run_task(client):
         else:
             data = client.cache[rid][0]
             view = client.cache[rid][1]
-        
-        if one == False:
-            one = True
-        else:
-            data[3].fp.seek(0)
+
+        with BytesIO() as image_binary:
+            data[3].save(image_binary, 'PNG')
+            image_binary.seek(0)
+            ru_map = discord.File(fp=image_binary, filename=f'mojang_ping.png')
 
         try:
             channel: discord.TextChannel = client.get_channel(guild.get('channel'))
 
             if guild.get('message') == None:
-                message = await channel.send(embeds=[data[2], data[0][0]], file=data[3], view=view)
+                message = await channel.send(embeds=[data[2], data[0][0]], file=ru_map, view=view)
 
                 async with client.pool.acquire() as conn:
                     await conn.execute("UPDATE settings SET message = $1 WHERE id = $2", message.id, guild.get('id'))
             else:
                 try:
                     message = await channel.fetch_message(guild.get('message'))
-                    await message.edit(embeds=[data[2], data[0][0]], attachments=[data[3]], view=view)
+                    await message.edit(embeds=[data[2], data[0][0]], attachments=[ru_map], view=view)
                 except:
                     # If the message was deleted, the bot tries to send the message again...
                     try:
-                        message = await channel.send(embeds=[data[2], data[0][0]], file=data[3], view=view)
+                        message = await channel.send(embeds=[data[2], data[0][0]], file=ru_map, view=view)
 
                         async with client.pool.acquire() as conn:
                             await conn.execute("UPDATE settings SET message = $1 WHERE id = $2", message.id, guild.get('id'))

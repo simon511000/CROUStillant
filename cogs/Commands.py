@@ -11,8 +11,9 @@ from discord.ext import commands
 
 import json
 
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
+from io import BytesIO
 
 
 path = str(Path(__file__).parents[0].parents[0])
@@ -53,8 +54,13 @@ class Commands(commands.Cog):
         data = await load_embed(interaction.client, d)
         view = Menu(d.info, data[0], data[1])
 
+        with BytesIO() as image_binary:
+            data[3].save(image_binary, 'PNG')
+            image_binary.seek(0)
+            ru_map = discord.File(fp=image_binary, filename=f'mojang_ping.png')
+
         try:
-            msg = await salon.send(embeds=[data[2], data[0][0]], file=data[3], view=view)
+            msg = await salon.send(embeds=[data[2], data[0][0]], file=ru_map, view=view)
 
             async with interaction.client.pool.acquire() as conn:
                 rows = await conn.fetch("SELECT * FROM settings WHERE id = $1", interaction.guild.id)
