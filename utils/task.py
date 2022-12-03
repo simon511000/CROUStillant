@@ -32,7 +32,7 @@ async def run_task(client):
         with BytesIO() as image_binary:
             data[3].save(image_binary, 'PNG')
             image_binary.seek(0)
-            ru_map = discord.File(fp=image_binary, filename=f'mojang_ping.png')
+            ru_map = discord.File(fp=image_binary, filename=f'map.png')
 
         try:
             channel: discord.TextChannel = client.get_channel(guild.get('channel'))

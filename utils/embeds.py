@@ -122,7 +122,7 @@ async def load_embed(client, data: RU):
 
 
     ru_map = await image(
-        url=f"https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/geojson(%7B%22type%22%3A%22Point%22%2C%22coordinates%22%3A%5B{data.info.coords.lat}1%2C{data.info.coords.long}%5D%7D)/{data.info.coords.lat},{data.info.coords.long},15.25,0,0/1000x400?access_token={client.mapbox}",
+        url=f"https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/geojson(%7B%22type%22%3A%22Point%22%2C%22coordinates%22%3A%5B{data.info.coords.long}1%2C{data.info.coords.lat}%5D%7D)/{data.info.coords.long},{data.info.coords.lat},15.25,0,0/1000x400?access_token={client.mapbox}",
         session=client.session
     )
 

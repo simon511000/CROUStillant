@@ -57,7 +57,7 @@ class Commands(commands.Cog):
         with BytesIO() as image_binary:
             data[3].save(image_binary, 'PNG')
             image_binary.seek(0)
-            ru_map = discord.File(fp=image_binary, filename=f'mojang_ping.png')
+            ru_map = discord.File(fp=image_binary, filename=f'map.png')
 
         try:
             msg = await salon.send(embeds=[data[2], data[0][0]], file=ru_map, view=view)
