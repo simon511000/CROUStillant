@@ -53,7 +53,7 @@ async def load_embed(client, data: RU):
     else:
         cafet = ""
     
-    default=discord.Embed(title=f"{data.info.nom}", description=f"**`•` Campus**: `{data.info.campus}`\n**`•` Adresse**: `{data.info.adresse}, {data.info.cp} {data.info.ville}`{wifi}\n\n**`•` Téléphone**: `{data.info.tel}`\n**`•` Courriel**: `{data.info.mail}`", color=client.color, url=data.info.url)
+    default=discord.Embed(title=f"{data.info.nom}", description=f"**`•` Campus**: `{data.info.zone}`\n**`•` Adresse**: `{data.info.adresse}, {data.info.cp} {data.info.ville}`{wifi}\n\n**`•` Téléphone**: `{data.info.tel}`\n**`•` Courriel**: `{data.info.mail}`", color=client.color, url=data.info.url)
     default.add_field(name=f"Horraires:", value=f"╰ **Self**: `{data.info.horaires.midi_self}`{cafet}")
     default.add_field(name=f"Paiements:", value=f"{cb}{izly}", inline=False)
     default.add_field(name=f"Accès:", value=f"{bus}{pmr}", inline=False)
@@ -92,7 +92,8 @@ async def load_embed(client, data: RU):
                     msg = ""
 
                     for i in menu.midi:
-                        msg += f"**{i.categorie}**\n{'\n- '.join(i.data)}\n"
+                        w = '\n- '.join(i.data)
+                        msg += f"**{i.categorie}**\n{w}\n"
                         count += 1
 
                         if count == 3:
