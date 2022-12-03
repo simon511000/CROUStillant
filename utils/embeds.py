@@ -23,45 +23,7 @@ def get_clean_date(day, month, year):
 async def load_embed(client, data: RU):
     embeds = []
     options = []
-    
-    if data.info.acces.bus == []:
-        bus = ""
-    else:
-        bus = f"\n╰ {icons['bus']} **Bus**: `{', '.join(data.info.acces.bus)}`"
 
-    if data.info.acces.pmr == []:
-        pmr = ""
-    else:
-        pmr = f"\n╰ {icons['pmr']} **PMR**: `Accessible aux personnes à mobilité réduite`"
-
-    if data.info.wifi:
-        wifi = f"\n**`•` {icons['wifi']} Wifi**: `Disponible`"
-    else:
-        wifi = ""
-
-    if data.info.paiement.izly:
-        izly = f"\n**`•` {icons['izly']} IZLY**: `Disponible`"
-    else:
-        izly = ""
-
-    if data.info.paiement.cb:
-        cb = f"\n**`•` {icons['cb']} Carte Bancaire**: `Disponible`"
-    else:
-        cb = ""
-    
-    if data.info.horaires.midi_cafet != "":
-        cafet = f"\n╰ **Cafétéria**: `{data.info.horaires.midi_cafet}`"
-    else:
-        cafet = ""
-    
-    default=discord.Embed(title=f"{data.info.nom}", description=f"**`•` Campus**: `{data.info.zone}`\n**`•` Adresse**: `{data.info.adresse}, {data.info.cp} {data.info.ville}`{wifi}\n\n**`•` Téléphone**: `{data.info.tel}`\n**`•` Courriel**: `{data.info.mail}`", color=client.color, url=data.info.url)
-    default.add_field(name=f"Horraires:", value=f"╰ **Self**: `{data.info.horaires.midi_self}`{cafet}")
-    default.add_field(name=f"Paiements:", value=f"{cb}{izly}", inline=False)
-    default.add_field(name=f"Accès:", value=f"{bus}{pmr}", inline=False)
-    default.set_thumbnail(url=client.avatar_url)
-    default.set_image(url=f"attachment://map.png")
-    default.set_footer(text=client.footer_text, icon_url=client.avatar_url)
-   
         
     if len(data.dates) == 0:
         embed = discord.Embed(title=f"{data.info.nom} - Error 404", description=f"**`•` Le CROUS ne fournit pas d'information actuellement pour ce restaurant...**\n**`•` Mis à jour**: <t:{int(datetime.datetime.utcnow().timestamp())}:R> (<t:{int(datetime.datetime.utcnow().timestamp())}>)", color=client.color, url=data.info.url)
@@ -125,4 +87,4 @@ async def load_embed(client, data: RU):
     )
 
 
-    return (embeds, options, default, ru_map)
+    return (embeds, options, ru_map)
