@@ -53,8 +53,11 @@ class Commands(commands.Cog):
         data = await load_embed(interaction.client, d)
         view = Menu(d.info, data[0], data[1])
 
+        ru_map = data[3]
+        ru_map.fp.seek(0)
+
         try:
-            msg = await salon.send(embeds=[data[2], data[0][0]], view=view)
+            msg = await salon.send(embeds=[data[2], data[0][0]], file=ru_map, view=view)
 
             async with interaction.client.pool.acquire() as conn:
                 rows = await conn.fetch("SELECT * FROM settings WHERE id = $1", interaction.guild.id)
