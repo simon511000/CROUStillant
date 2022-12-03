@@ -31,7 +31,7 @@ async def get_menu(session: ClientSession, rid: str):
 
     for elt in elements:
         selt = elt.split("</h3>")
-        date = selt[0]
+        date = selt[0].replace("Menu du ", "")[:-5]
         dates.append(date)
 
         data[date] = {}
