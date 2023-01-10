@@ -68,6 +68,8 @@ class Menu(discord.ui.View):
         else:
             cafet = ""
         
+        self.ru_map.fp.seek(0)
+        
         embed=discord.Embed(title=f"{self.infos.nom}", description=f"**`•` Campus**: `{self.infos.zone}`\n**`•` Adresse**: `{self.infos.adresse}, {self.infos.cp} {self.infos.ville}`{wifi}\n\n**`•` Téléphone**: `{self.infos.tel}`{mail}", color=interaction.client.color, url=self.infos.url)
         embed.add_field(name=f"Horraires:", value=f"╰ **Self**: `{self.infos.horaires.midi_self}`{cafet}")
         embed.add_field(name=f"Paiements:", value=f"{cb}{izly}", inline=False)

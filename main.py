@@ -58,7 +58,7 @@ class Bot(commands.Bot):
         self.path = str(Path(__file__).parents[0])
         
 
-        self.footer_text = f"CROUStillant • v2.0.1-BETA - Créé par Polsu Development" 
+        self.footer_text = f"CROUStillant • v2.0.2-BETA - Créé par Polsu Development" 
 
 
         # Variables
@@ -100,8 +100,8 @@ class Bot(commands.Bot):
         self.log.info(self.user.name)
         self.log.info(self.user.id)
         
-        print(f"CrousBot is now on!\n>> {datetime.utcnow()}\n")
-        self.log.info(f"CrousBot is now on!\n>> {datetime.utcnow()}\n")
+        print(f"CROUStillant is now on!\n>> {datetime.utcnow()}\n")
+        self.log.info(f"CROUStillant is now on!\n>> {datetime.utcnow()}\n")
         self.ready = True
 
         self.avatar_url = self.user.avatar.url

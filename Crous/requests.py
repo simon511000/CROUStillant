@@ -19,48 +19,46 @@ async def get_menu(session: ClientSession, rid: str):
         text = await response.text()
 
     soup = BeautifulSoup(text, "html.parser")
-    results = soup.find(id="menu-repas")
-    elements = results.find_all("ul", class_="slides")
-    elements = str(elements[0])
-    elements = elements.split("<h3>")
-    elements.pop(0) # remove: <ul class="slides">
+    results = soup.find("section", class_="menus")
+    elements = results.find_all("div", class_="menu")
 
 
     dates = []
     data = {}
 
     for elt in elements:
-        selt = elt.split("</h3>")
-        date = selt[0].replace("Menu du ", "")[:-5]
-        dates.append(date)
+        meal = str(elt).split('<time class="menu_date_title">')[1].split('</time>')
 
+
+        # Get Date
+        date = meal[0].replace("Menu du ", "")[:-5]
+        dates.append(date)
         data[date] = {}
 
-        for x in selt[1:]:
-            sselt = x.split("<h4>")
 
-            for y in sselt[1:]:
-                ssselt = y.split("</h4>")
-                header = ssselt[0]
+        meal = str(meal[1]).split('<div class="meal_title">')[1].split('</div>')
 
-                data[date][header] = {}
 
-                for z in ssselt[1:]:
-                    if not "li" in z.split('\n')[0]:
-                        data[date][header] = ''.join(BeautifulSoup(z, "html.parser").findAll(text=True)).replace(" \n", "").replace("\n", "")
-                    else:
-                        sdata = z.split("<span class=\"name\">")
+        # Get Header (e.g. 'Déjeuner')
+        header = meal[0]
+        data[date][header] = {}
 
-                        for a in sdata[1:]:
-                            sssselt = a.split("</span><ul class=\"liste-plats\">")
-                            title = sssselt[0]
 
-                            menus = []
-                            for b in sssselt[1].split('</li>'):
-                                n = ''.join(BeautifulSoup(b, "html.parser").findAll(text=True)).replace(" \n", "").replace("\n", "")
-                                if n != '':
-                                    menus.append(n)
+        temp = ""
+        menus = []
+        for meal_data in meal[1].split('<li>')[1:]:
+            if meal_data.endswith('<ul>'):
+                if temp != "":
+                    data[date][header][title] = menus
+                    menus = []
 
-                            data[date][header][title] = menus
+                title = meal_data[:-4]
+                temp = title  
+            else:
+                menus.append(''.join(BeautifulSoup(meal_data, "html.parser").findAll(text=True)).replace(" \n", "").replace("\n", ""))
+
+        # We musn't forget the last one!
+        data[date][header][title] = menus
+        
         
     return RU(data, dates, rdata)
