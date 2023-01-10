@@ -28,7 +28,7 @@ Une fois la configuration mise en place (à l'aide de la slash commande `/crous`
 **Important: CROUStillant n'est pas affilié à 'CROUS' !**  
    
    
-Si vous avez besin d'aide rejoingnez le **[serveur officiel](https://discord.gg/tFr2B6EezM)**.   
+Si vous avez besoin d'aide rejoingnez le **[serveur officiel](https://discord.gg/tFr2B6EezM)**.   
 
 ![ScreenShot](https://media.discordapp.net/attachments/803308630404235264/1025805965989257386/unknown.png?width=616&height=670)
 
