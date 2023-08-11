@@ -3,3 +3,6 @@ aiohttp
 bs4
 pathlib
 pytz
+Pillow
+asyncpg
+python-dotenv
