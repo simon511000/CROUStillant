@@ -119,7 +119,7 @@ class Bot(commands.Bot):
         # > DataBase
 
         # Create Pool, connection to dB:
-        self.pool = await asyncpg.create_pool(database="Crous", user="postgres", password=environ['password'], host="127.0.0.1")
+        self.pool = await asyncpg.create_pool(database=environ['POSTGRES_DATABASE'], user=environ['POSTGRES_USER'], password=environ['POSTGRES_PASSWORD'], host=environ['POSTGRES_HOST'])
 
 
         # Create a new table if necessary:
