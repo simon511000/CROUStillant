@@ -1,0 +1,18 @@
+services:
+  croustillant:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      ctoken: # Your discord token
+      mapbox: # Your mapbox token
+      POSTGRES_HOST: db
+      POSTGRES_DATABASE: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: croustillant
+  db:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: croustillant
